@@ -1,0 +1,49 @@
+{
+  "name": "api-management-service",
+  "version": "0.0.1",
+  "description": "A management service for self service developer APIs",
+  "private": true,
+  "author": "Matt Smith <mattonfoot@gmail.com> (http://about.me/mattonfoot)",
+  "engines": {
+    "npm": "~6.9.0",
+    "node": "~10.13.0"
+  },
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js | bunyan -o short -l trace",
+    "build": "webpack",
+    "test": "mocha --exit",
+    "test-report": "mocha --exit --reporter mocha-junit-reporter",
+    "record-build-info": "node ./bin/record-build-info",
+    "wait-for-deploy": "node ./bin/wait-for-deploy",
+    "snyk": "snyk test",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "accepts-ext": "^1.0.0",
+    "aws-sdk": "^2.437.0",
+    "body-parser": "^1.17.2",
+    "bunyan": "1.8.12",
+    "bunyan-middleware": "^0.8.0",
+    "chokidar": "^2.0.0",
+    "csv": "^5.1.1",
+    "dotenv": "^7.0.0",
+    "express": "^4.15.3",
+    "express-nunjucks": "^2.2.3",
+    "govuk-frontend": "^2.10.0",
+    "helmet": "^3.6.1",
+    "mkdirp": "^0.5.1",
+    "moment": "^2.22.0",
+    "nunjucks": "^3.2.0",
+    "puppeteer": "^1.14.0",
+    "rimraf": "^2.6.3",
+    "serve-favicon": "^2.4.2",
+    "x-frame-options": "^1.0.0"
+  },
+  "devDependencies": {
+    "snyk": "^1.147.3"
+  },
+  "snyk": true
+}
