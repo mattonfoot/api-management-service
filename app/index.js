@@ -11,10 +11,9 @@ const acceptFileExtensions = require('accepts-ext');
 
 const moment = require('moment');
 
-const errors = require('../server/errors');
+const config = require('./config');
 const healthcheck = require('./helpers/healthcheck');
 
-const syncController = require('./controllers/sync');
 const indexController = require('./controllers/index');
 
 // eslint-disable-next-line no-unused-vars
@@ -53,8 +52,7 @@ function setupOperationalRoutes(app, logger) {
         }
 
         res.json(result);
-      })
-      .catch((err) => errors.unexpected(res, err.message)));
+      }));
 }
 
 function setupViewEngine (app) {
@@ -102,27 +100,9 @@ function setupRouters(app, logger) {
 
   logger.info('GET: /');
   app.use('/', indexController(logger));
-
-  logger.info('GET: /sync');
-  app.use('/sync', syncController(logger));
 };
 
-function setupErrorHandling(app, logger) {
-  app.use(function notFoundHandler(req, res) {
-    const msg = `404: No handler exists for [${req.method}: ${req.originalUrl}]`;
-
-    logger.warn(msg);
-    errors.notFound(res, msg);
-  });
-
-  // eslint-disable-next-line no-unused-vars
-  app.use(function errorHandler(err, req, res, next) {
-    logger.error(err);
-    errors.unexpected(res, err);
-  });
-}
-
-module.exports = (config, logger, callback, includeErrorHandling = true) => {
+module.exports = (logger, callback) => {
   const app = express();
   app.locals.config = config;
 
@@ -134,10 +114,6 @@ module.exports = (config, logger, callback, includeErrorHandling = true) => {
   setupViewEngine(app, logger);
   setupStaticRoutes(app, logger);
   setupRouters(app, logger);
-
-  if (includeErrorHandling) {
-    setupErrorHandling(app, logger);
-  }
 
   healthcheck(config, logger)
     .then((result) => {

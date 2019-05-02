@@ -1,13 +1,12 @@
 const Logger = require('bunyan');
-
-const config = require('./config');
+const pkg = require('../package');
 
 module.exports = new Logger({
-  name: config.name,
+  name: `${pkg.name}@${pkg.version}`,
   streams: [
     {
       stream: process.stdout,
-      level: config.logLevel,
+      level: 'TRACE',
     }
   ]
 });

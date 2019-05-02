@@ -1,6 +1,6 @@
 {% extends "template.njk" %}
 
-{% block pageTitle %}GOV.UK - Check an Export Certificate{% endblock %}
+{% block pageTitle %}GOV.UK - {{serviceName}}{% endblock %}
 
 {% block head %}
   <!--[if !IE 8]><!-->
@@ -23,7 +23,7 @@
   {{ govukHeader({
     homepageUrl: "#",
     containerClasses: "govuk-width-container",
-    serviceName: "Check an Export Certificate",
+    serviceName: serviceName,
     serviceUrl: "#"
   }) }}
 {% endblock %}
