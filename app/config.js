@@ -1,4 +1,5 @@
 require('dotenv').config();
+const pkg = require('../package');
 
 const env = process.env;
 
@@ -17,12 +18,16 @@ const get = (name, fallback, options = {}) => {
 };
 
 let config = {
+  pkg,
+
   dev: dev,
   buildDate: env.BUILD_DATE,
   commitId: env.COMMIT_ID,
   buildTag: env.BUILD_TAG,
 
   port: get('PORT', 3000),
+
+  docroot: 'docroot',
 };
 
 module.exports = config;

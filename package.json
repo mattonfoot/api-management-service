@@ -3,6 +3,10 @@
   "version": "0.0.1",
   "description": "A management service for self service developer APIs",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mattonfoot/api-management-service.git"
+  },
   "author": "Matt Smith <mattonfoot@gmail.com> (http://about.me/mattonfoot)",
   "engines": {
     "npm": "~6.9.0",
@@ -31,13 +35,15 @@
     "express-nunjucks": "^2.2.3",
     "govuk-frontend": "^2.10.0",
     "helmet": "^3.6.1",
-    "moment": "^2.22.0",
+    "mkdirp": "^0.5.1",
+    "moment": "^2.24.0",
     "nunjucks": "^3.2.0",
     "serve-favicon": "^2.4.2",
+    "simple-git": "^1.110.0",
     "x-frame-options": "^1.0.0"
   },
   "devDependencies": {
-    "snyk": "^1.147.3"
+    "snyk": "^1.161.1"
   },
   "snyk": true
 }

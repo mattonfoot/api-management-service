@@ -15,6 +15,7 @@ const config = require('./config');
 const healthcheck = require('./helpers/healthcheck');
 
 const indexController = require('./controllers/index');
+const servicesController = require('./controllers/services');
 
 // eslint-disable-next-line no-unused-vars
 const formatDate = (str, format) => moment(str).format(format);
@@ -98,8 +99,11 @@ function setupStaticRoutes (app, logger) {
 function setupRouters(app, logger) {
   logger.info('registering controllers...');
 
-  logger.info('GET: /');
+  logger.info('/');
   app.use('/', indexController(logger));
+
+  logger.info('/services');
+  app.use('/services', servicesController(logger));
 };
 
 module.exports = (logger, callback) => {
