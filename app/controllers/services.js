@@ -15,28 +15,30 @@ const AcknowledgementViewModel = require('../models/base');
 
 // private
 
-const docroot = path.join(__dirname, `../../${config.docroot}`);
-const serviceRegisterPath = path.join(docroot, 'register.json');
+const docroot = path.join(process.cwd(), `../${config.docroot}`);
+const serviceRegisterPath = path.join(docroot, './index.json');
 const remote = config.pkg.repository.url;
+
+if (!fs.existsSync(docroot)) {
+  mkdirp.sync(docroot);
+}
+
+const repo = git(docroot);
 
 const renderAcknowledgement = (res) => helpers.format(res, 'services/acknowledgement');
 
 const createAcknowledgementViewModel = (/* req */) => (data) => new AcknowledgementViewModel(data);
 
-const convertToRepo = (repo, remote) => {
-  return repo.init()
+const convertToRepo = (repo) => {
+  return repo.cwd(docroot)
+    .then(() => repo.init())
     .then(() => repo.addRemote('origin', remote));
 };
 
-const getRepository = (remote, branch, local) => {
-  if (!fs.existsSync(local)) {
-    mkdirp.sync(local);
-  }
-
-  const repo = git(local);
-
-  return repo.checkIsRepo()
-    .then(isRepo => !isRepo && convertToRepo(repo, remote))
+const getRepository = (branch) => {
+  return repo.cwd(docroot)
+    .then(() => repo.checkIsRepo())
+    .then(isRepo => !isRepo && convertToRepo(repo))
     .then(() => repo.fetch())
     .then(() => repo.checkout(branch))
     .then(() => repo);
@@ -65,19 +67,20 @@ const storeServiceConfig = (entry) => (repo) => {
 };
 
 const publishChanges = (message) => (repo) => {
-  return repo.add('./*')
+  return repo.cwd(docroot)
+    .then(() => repo.add('./*'))
     .then(() => repo.commit(message))
     .then(() => repo.push())
     .then(() => repo);
 };
 
-const process = () => async (info) => {
+const addServiceToRegister = () => async (info) => {
   info = {
     uri: info.uri,
     timestamp: moment().toISOString(true),
   };
 
-  await getRepository(remote, 'gh-pages', docroot)
+  await getRepository('gh-pages')
     .then(storeServiceConfig(info))
     .then(publishChanges('Service registered by webhook'));
 
@@ -86,7 +89,7 @@ const process = () => async (info) => {
 
 const registerService = (req, res, next) =>
   Promise.resolve(req.body)
-    .then(process(req))
+    .then(addServiceToRegister(req))
     .then(createAcknowledgementViewModel(req))
     .then(renderAcknowledgement(res))
     .catch(helpers.failWithError(res, next));
