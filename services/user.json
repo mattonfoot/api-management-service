@@ -1,1 +1,2041 @@
-{"swagger":"2.0","info":{"description":"UserService","version":"1.0.0","title":"SDS User Service","contact":{},"license":{"url":"http://unlicense.org"}},"host":"sds-user-service.sds.svc.cluster.local","basePath":"/","tags":[{"name":"Invite Entity","description":"Simple Jpa Repository"},{"name":"User Entity","description":"Simple Jpa Repository"},{"name":"account-controller","description":"Account Controller"},{"name":"hal-browser","description":"Hal Browser"},{"name":"invite-controller","description":"Invite Controller"},{"name":"profile-controller","description":"Profile Controller"}],"paths":{"/v1/":{"get":{"tags":["hal-browser"],"summary":"index","operationId":"indexUsingGET","produces":["text/html"],"responses":{"200":{"description":"OK","schema":{"$ref":"#/definitions/View"}}},"deprecated":false}},"/v1/browser":{"get":{"tags":["hal-browser"],"summary":"browser","operationId":"browserUsingGET","produces":["*/*"],"responses":{"200":{"description":"OK","schema":{"$ref":"#/definitions/View"}}},"deprecated":false}},"/v1/commands/create-and-invite-user-to-vessel":{"post":{"tags":["invite-controller"],"summary":"Creates and invites a user to a vessel","operationId":"inviteUserUsingPOST_1","consumes":["application/json"],"produces":["application/json"],"parameters":[{"in":"body","name":"createAndInviteUserRequest","description":"createAndInviteUserRequest","required":true,"schema":{"$ref":"#/definitions/CreateAndInviteUserRequest"}}],"responses":{"200":{"description":"OK","schema":{"type":"string"}},"201":{"description":"Operation performed successfully","schema":{"type":"string"}},"400":{"description":"Invalid parameters","schema":{"type":"string"}},"401":{"description":"User not authenticated","schema":{"type":"string"}},"403":{"description":"User not authorised to perform operation","schema":{"type":"string"}},"404":{"description":"Resource could not be found","schema":{"type":"string"}},"500":{"description":"Error occurred while performing operation","schema":{"type":"string"}}},"deprecated":false}},"/v1/commands/deleteUser/{userId}":{"delete":{"tags":["account-controller"],"summary":"Causes a 'soft' delete of the user from the user service, removing any role against any vessel, and removing any skippers from any vessels they are the sole Owner of.","operationId":"deleteUserUsingDELETE","produces":["application/json"],"parameters":[{"name":"userId","in":"path","description":"userId","required":true,"type":"string","format":"uuid"}],"responses":{"200":{"description":"Operation performed successfully","schema":{"type":"string"}},"400":{"description":"Invalid parameters","schema":{"type":"string"}},"401":{"description":"User not authenticated","schema":{"type":"string"}},"403":{"description":"User not authorised to perform operation","schema":{"type":"string"}},"404":{"description":"Resource could not be found","schema":{"type":"string"}},"500":{"description":"Error occurred while performing operation","schema":{"type":"string"}}},"deprecated":false}},"/v1/commands/invite-user-to-vessel":{"post":{"tags":["invite-controller"],"summary":"Invites a user to a vessel","operationId":"inviteUserUsingPOST_2","consumes":["application/json"],"produces":["application/json"],"parameters":[{"in":"body","name":"inviteUserToVesselRequest","description":"inviteUserToVesselRequest","required":true,"schema":{"$ref":"#/definitions/InviteUserToVesselRequest"}}],"responses":{"200":{"description":"OK","schema":{"type":"string"}},"201":{"description":"Operation performed successfully","schema":{"type":"string"}},"400":{"description":"Invalid parameters","schema":{"type":"string"}},"401":{"description":"User not authenticated","schema":{"type":"string"}},"403":{"description":"User not authorised to perform operation","schema":{"type":"string"}},"404":{"description":"Resource could not be found","schema":{"type":"string"}},"500":{"description":"Error occurred while performing operation","schema":{"type":"string"}}},"deprecated":false}},"/v1/commands/post-signin-actions/{userId}":{"get":{"tags":["account-controller"],"summary":"Retrieves all the actions the user has to perform after signing in","operationId":"postSignInActionsUsingGET","produces":["application/json"],"parameters":[{"name":"userId","in":"path","description":"userId","required":true,"type":"string","format":"uuid"}],"responses":{"200":{"description":"Operation performed successfully","schema":{"type":"string"}},"400":{"description":"Invalid parameters","schema":{"type":"string"}},"401":{"description":"User not authenticated","schema":{"type":"string"}},"403":{"description":"User not authorised to perform operation","schema":{"type":"string"}},"404":{"description":"Resource could not be found","schema":{"type":"string"}},"500":{"description":"Error occurred while performing operation","schema":{"type":"string"}}},"deprecated":false}},"/v1/commands/resetPassword":{"post":{"tags":["invite-controller"],"summary":"Sends a Reset Password email","operationId":"resetPasswordUsingPOST","consumes":["application/json"],"produces":["*/*"],"parameters":[{"in":"body","name":"email","description":"email","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK","schema":{"type":"object"}}},"deprecated":false}},"/v1/commands/signin":{"post":{"tags":["account-controller"],"summary":"Performs the sign in of a user","operationId":"signInUsingPOST","consumes":["application/json"],"produces":["application/json"],"parameters":[{"in":"body","name":"signInRequest","description":"signInRequest","required":true,"schema":{"$ref":"#/definitions/SignInRequest"}}],"responses":{"200":{"description":"OK","schema":{"type":"string"}},"201":{"description":"Operation performed successfully","schema":{"type":"string"}},"400":{"description":"Invalid parameters","schema":{"type":"string"}},"401":{"description":"User not authenticated","schema":{"type":"string"}},"403":{"description":"User not authorised to perform operation","schema":{"type":"string"}},"404":{"description":"Resource could not be found","schema":{"type":"string"}},"500":{"description":"Error occurred while performing operation","schema":{"type":"string"}}},"deprecated":false}},"/v1/commands/signout/{idToken}":{"post":{"tags":["account-controller"],"summary":"Performs the sign out of a user","operationId":"signOutUsingPOST","consumes":["application/json"],"produces":["application/json"],"parameters":[{"name":"idToken","in":"path","description":"idToken","required":true,"type":"string"}],"responses":{"200":{"description":"OK","schema":{"type":"string"}},"201":{"description":"Operation performed successfully","schema":{"type":"string"}},"400":{"description":"Invalid parameters","schema":{"type":"string"}},"401":{"description":"User not authenticated","schema":{"type":"string"}},"403":{"description":"User not authorised to perform operation","schema":{"type":"string"}},"404":{"description":"Resource could not be found","schema":{"type":"string"}},"500":{"description":"Error occurred while performing operation","schema":{"type":"string"}}},"deprecated":false}},"/v1/commands/signup/{token}":{"post":{"tags":["account-controller"],"summary":"Creates an account for an invited user","operationId":"signUpUsingPOST","consumes":["application/json"],"produces":["application/json"],"parameters":[{"in":"body","name":"password","description":"password","required":true,"schema":{"$ref":"#/definitions/SignUpPassword"}},{"name":"token","in":"path","description":"token","required":true,"type":"string"}],"responses":{"200":{"description":"OK","schema":{"type":"string"}},"201":{"description":"Operation performed successfully","schema":{"type":"string"}},"400":{"description":"Invalid parameters","schema":{"type":"string"}},"401":{"description":"User not authenticated","schema":{"type":"string"}},"403":{"description":"User not authorised to perform operation","schema":{"type":"string"}},"404":{"description":"Resource could not be found","schema":{"type":"string"}},"500":{"description":"Error occurred while performing operation","schema":{"type":"string"}}},"deprecated":false}},"/v1/invites":{"get":{"tags":["Invite Entity"],"summary":"findAllInvite","operationId":"findAllInviteUsingGET","produces":["application/json","application/hal+json","text/uri-list","application/x-spring-data-compact+json"],"parameters":[{"name":"page","in":"query","description":"page","required":false,"type":"string"},{"name":"size","in":"query","description":"size","required":false,"type":"string"},{"name":"sort","in":"query","description":"sort","required":false,"type":"string"}],"responses":{"200":{"description":"OK","schema":{"$ref":"#/definitions/Resources«Invite»"}}},"deprecated":false}},"/v1/invites/{id}":{"get":{"tags":["Invite Entity"],"summary":"findByIdInvite","operationId":"findByIdInviteUsingGET","produces":["*/*"],"parameters":[{"name":"id","in":"path","description":"id","required":true,"type":"string","format":"uuid"}],"responses":{"200":{"description":"OK","schema":{"$ref":"#/definitions/Resource«Invite»"}}},"deprecated":false}},"/v1/invites/{id}/user":{"get":{"tags":["Invite Entity"],"summary":"inviteUser","operationId":"inviteUserUsingGET","produces":["application/hal+json"],"parameters":[{"name":"id","in":"path","description":"id","required":true,"type":"string","format":"uuid"}],"responses":{"200":{"description":"OK","schema":{"$ref":"#/definitions/Resource«User»"}}},"deprecated":false},"post":{"tags":["Invite Entity"],"summary":"inviteUser","operationId":"inviteUserUsingPOST","consumes":["text/uri-list","application/x-spring-data-compact+json"],"produces":["*/*"],"parameters":[{"in":"body","name":"body","description":"body","required":true,"schema":{"type":"string"}},{"name":"id","in":"path","description":"id","required":true,"type":"string","format":"uuid"}],"responses":{"200":{"description":"OK","schema":{"$ref":"#/definitions/Resource«User»"}}},"deprecated":false},"put":{"tags":["Invite Entity"],"summary":"inviteUser","operationId":"inviteUserUsingPUT","consumes":["text/uri-list","application/x-spring-data-compact+json"],"produces":["*/*"],"parameters":[{"in":"body","name":"body","description":"body","required":true,"schema":{"type":"string"}},{"name":"id","in":"path","description":"id","required":true,"type":"string","format":"uuid"}],"responses":{"200":{"description":"OK","schema":{"$ref":"#/definitions/Resource«User»"}}},"deprecated":false},"delete":{"tags":["Invite Entity"],"summary":"inviteUser","operationId":"inviteUserUsingDELETE","consumes":["text/uri-list","application/x-spring-data-compact+json"],"produces":["*/*"],"parameters":[{"name":"id","in":"path","description":"id","required":true,"type":"string","format":"uuid"}],"responses":{"200":{"description":"OK"}},"deprecated":false},"patch":{"tags":["Invite Entity"],"summary":"inviteUser","operationId":"inviteUserUsingPATCH","consumes":["text/uri-list","application/x-spring-data-compact+json"],"produces":["*/*"],"parameters":[{"in":"body","name":"body","description":"body","required":true,"schema":{"type":"string"}},{"name":"id","in":"path","description":"id","required":true,"type":"string","format":"uuid"}],"responses":{"200":{"description":"OK","schema":{"$ref":"#/definitions/Resource«User»"}}},"deprecated":false}},"/v1/profile":{"get":{"tags":["profile-controller"],"summary":"listAllFormsOfMetadata","operationId":"listAllFormsOfMetadataUsingGET","produces":["*/*"],"responses":{"200":{"description":"OK","schema":{"$ref":"#/definitions/ResourceSupport"}}},"deprecated":false},"options":{"tags":["profile-controller"],"summary":"profileOptions","operationId":"profileOptionsUsingOPTIONS","consumes":["application/json"],"produces":["*/*"],"responses":{"200":{"description":"OK","schema":{"type":"object"}}},"deprecated":false}},"/v1/users":{"get":{"tags":["User Entity"],"summary":"findAllUser","operationId":"findAllUserUsingGET","produces":["application/json","application/hal+json","text/uri-list","application/x-spring-data-compact+json"],"parameters":[{"name":"page","in":"query","description":"page","required":false,"type":"string"},{"name":"size","in":"query","description":"size","required":false,"type":"string"},{"name":"sort","in":"query","description":"sort","required":false,"type":"string"}],"responses":{"200":{"description":"OK","schema":{"$ref":"#/definitions/Resources«User»"}}},"deprecated":false},"post":{"tags":["User Entity"],"summary":"saveUser","operationId":"saveUserUsingPOST","consumes":["application/json"],"produces":["*/*"],"parameters":[{"in":"body","name":"body","description":"body","required":true,"schema":{"$ref":"#/definitions/User"}}],"responses":{"200":{"description":"OK","schema":{"$ref":"#/definitions/Resource«User»"}}},"deprecated":false}},"/v1/users/{id}":{"get":{"tags":["User Entity"],"summary":"findByIdUser","operationId":"findByIdUserUsingGET","produces":["*/*"],"parameters":[{"name":"id","in":"path","description":"id","required":true,"type":"string","format":"uuid"}],"responses":{"200":{"description":"OK","schema":{"$ref":"#/definitions/Resource«User»"}}},"deprecated":false},"put":{"tags":["User Entity"],"summary":"saveUser","operationId":"saveUserUsingPUT","consumes":["application/json"],"produces":["*/*"],"parameters":[{"in":"body","name":"body","description":"body","required":true,"schema":{"$ref":"#/definitions/User"}},{"name":"id","in":"path","description":"id","required":true,"type":"string","format":"uuid"}],"responses":{"200":{"description":"OK","schema":{"$ref":"#/definitions/Resource«User»"}}},"deprecated":false},"patch":{"tags":["User Entity"],"summary":"saveUser","operationId":"saveUserUsingPATCH","consumes":["application/json"],"produces":["*/*"],"parameters":[{"in":"body","name":"body","description":"body","required":true,"schema":{"$ref":"#/definitions/User"}},{"name":"id","in":"path","description":"id","required":true,"type":"string","format":"uuid"}],"responses":{"200":{"description":"OK","schema":{"$ref":"#/definitions/Resource«User»"}}},"deprecated":false}},"/v1/users/{id}/invites":{"get":{"tags":["User Entity"],"summary":"userInvites","operationId":"userInvitesUsingGET","produces":["application/hal+json"],"parameters":[{"name":"id","in":"path","description":"id","required":true,"type":"string","format":"uuid"}],"responses":{"200":{"description":"OK","schema":{"$ref":"#/definitions/Resources«Invite»"}}},"deprecated":false},"post":{"tags":["User Entity"],"summary":"userInvites","operationId":"userInvitesUsingPOST","consumes":["text/uri-list","application/x-spring-data-compact+json"],"produces":["*/*"],"parameters":[{"in":"body","name":"body","description":"body","required":true,"schema":{"type":"array","items":{"type":"string"}}},{"name":"id","in":"path","description":"id","required":true,"type":"string","format":"uuid"}],"responses":{"200":{"description":"OK","schema":{"$ref":"#/definitions/Resources«Invite»"}}},"deprecated":false},"put":{"tags":["User Entity"],"summary":"userInvites","operationId":"userInvitesUsingPUT","consumes":["text/uri-list","application/x-spring-data-compact+json"],"produces":["*/*"],"parameters":[{"in":"body","name":"body","description":"body","required":true,"schema":{"type":"array","items":{"type":"string"}}},{"name":"id","in":"path","description":"id","required":true,"type":"string","format":"uuid"}],"responses":{"200":{"description":"OK","schema":{"$ref":"#/definitions/Resources«Invite»"}}},"deprecated":false},"delete":{"tags":["User Entity"],"summary":"userInvites","operationId":"userInvitesUsingDELETE","consumes":["text/uri-list","application/x-spring-data-compact+json"],"produces":["*/*"],"parameters":[{"name":"id","in":"path","description":"id","required":true,"type":"string","format":"uuid"}],"responses":{"200":{"description":"OK"}},"deprecated":false},"patch":{"tags":["User Entity"],"summary":"userInvites","operationId":"userInvitesUsingPATCH","consumes":["text/uri-list","application/x-spring-data-compact+json"],"produces":["*/*"],"parameters":[{"in":"body","name":"body","description":"body","required":true,"schema":{"type":"array","items":{"type":"string"}}},{"name":"id","in":"path","description":"id","required":true,"type":"string","format":"uuid"}],"responses":{"200":{"description":"OK","schema":{"$ref":"#/definitions/Resources«Invite»"}}},"deprecated":false}},"/v1/users/{id}/invites/{inviteId}":{"get":{"tags":["User Entity"],"summary":"userInvites","operationId":"userInvitesUsingGET_1","consumes":["application/hal+json"],"produces":["*/*"],"parameters":[{"name":"id","in":"path","description":"id","required":true,"type":"string","format":"uuid"},{"name":"inviteId","in":"path","description":"inviteId","required":true,"type":"string"}],"responses":{"200":{"description":"OK","schema":{"$ref":"#/definitions/Resource«Invite»"}}},"deprecated":false},"delete":{"tags":["User Entity"],"summary":"userInvites","operationId":"userInvitesUsingDELETE_1","consumes":["text/uri-list","application/x-spring-data-compact+json"],"produces":["*/*"],"parameters":[{"name":"id","in":"path","description":"id","required":true,"type":"string","format":"uuid"},{"name":"inviteId","in":"path","description":"inviteId","required":true,"type":"string"}],"responses":{"200":{"description":"OK"}},"deprecated":false}}},"definitions":{"Address":{"type":"object","properties":{"address1":{"type":"string"},"address2":{"type":"string"},"city":{"type":"string"},"country":{"type":"string"},"county":{"type":"string"},"created":{"type":"string","format":"date-time"},"deleted":{"type":"string","format":"date-time"},"id":{"type":"string","format":"uuid"},"poBox":{"type":"string"},"postcode":{"type":"string"},"updated":{"type":"string","format":"date-time"},"user":{"$ref":"#/definitions/User"}},"title":"Address"},"CreateAndInviteUserRequest":{"type":"object","properties":{"email":{"type":"string"},"firstName":{"type":"string"},"lastName":{"type":"string"},"role":{"type":"string","enum":["OWNER","SKIPPER","AGENT"]},"validFrom":{"type":"string","format":"date-time"},"validTo":{"type":"string","format":"date-time"},"vesselId":{"type":"string","format":"uuid"}},"title":"CreateAndInviteUserRequest"},"EmbeddedCollection«Invite»":{"type":"object","required":["invites"],"properties":{"invites":{"type":"array","description":"Resource collection","items":{"$ref":"#/definitions/Invite"}}},"title":"EmbeddedCollection«Invite»","description":"Embedded collection of Invite"},"EmbeddedCollection«User»":{"type":"object","required":["users"],"properties":{"users":{"type":"array","description":"Resource collection","items":{"$ref":"#/definitions/User"}}},"title":"EmbeddedCollection«User»","xml":{"name":"content","wrapped":true},"description":"Embedded collection of User"},"IdToken":{"type":"object","properties":{"expiresIn":{"type":"integer","format":"int64"},"token":{"type":"string"},"userId":{"type":"string","format":"uuid"}},"title":"IdToken"},"Invite":{"type":"object","properties":{"created":{"type":"string","format":"date-time"},"deleted":{"type":"string","format":"date-time"},"id":{"type":"string","format":"uuid"},"token":{"type":"string"},"updated":{"type":"string","format":"date-time"},"user":{"$ref":"#/definitions/User"},"userVesselRole":{"$ref":"#/definitions/UserVesselRole"}},"title":"Invite"},"InviteUserToVesselRequest":{"type":"object","properties":{"effectiveFrom":{"type":"string","format":"date-time"},"effectiveTo":{"type":"string","format":"date-time"},"role":{"type":"string","enum":["OWNER","SKIPPER","AGENT"]},"userId":{"type":"string","format":"uuid"},"vesselId":{"type":"string","format":"uuid"}},"title":"InviteUserToVesselRequest"},"Link":{"type":"object","properties":{"deprecation":{"type":"string","xml":{"name":"deprecation","attribute":true,"wrapped":false}},"href":{"type":"string","xml":{"name":"href","attribute":true,"wrapped":false}},"hreflang":{"type":"string","xml":{"name":"hreflang","attribute":true,"wrapped":false}},"media":{"type":"string","xml":{"name":"media","attribute":true,"wrapped":false}},"rel":{"type":"string","xml":{"name":"rel","attribute":true,"wrapped":false}},"templated":{"type":"boolean"},"title":{"type":"string","xml":{"name":"title","attribute":true,"wrapped":false}},"type":{"type":"string","xml":{"name":"type","attribute":true,"wrapped":false}}},"title":"Link","xml":{"name":"link","namespace":"http://www.w3.org/2005/Atom","attribute":false,"wrapped":false}},"ResourceSupport":{"type":"object","properties":{"links":{"type":"array","xml":{"name":"link","namespace":"http://www.w3.org/2005/Atom","attribute":false,"wrapped":false},"items":{"$ref":"#/definitions/Link"}}},"title":"ResourceSupport"},"Resources«Invite»":{"type":"object","required":["_embedded","_links"],"properties":{"_embedded":{"$ref":"#/definitions/EmbeddedCollection«Invite»"},"_links":{"type":"object","description":"Link collection","additionalProperties":{"$ref":"#/definitions/Link"}}},"title":"Resources«Invite»","description":"Resources of Invite"},"Resources«User»":{"type":"object","required":["_embedded","_links"],"properties":{"_embedded":{"$ref":"#/definitions/EmbeddedCollection«User»"},"_links":{"type":"object","description":"Link collection","additionalProperties":{"$ref":"#/definitions/Link"}}},"title":"Resources«User»","xml":{"name":"entities","attribute":false,"wrapped":false},"description":"Resources of User"},"Resource«Invite»":{"type":"object","properties":{"created":{"type":"string","format":"date-time"},"deleted":{"type":"string","format":"date-time"},"id":{"type":"string","format":"uuid"},"links":{"type":"array","xml":{"name":"link","namespace":"http://www.w3.org/2005/Atom","attribute":false,"wrapped":false},"items":{"$ref":"#/definitions/Link"}},"token":{"type":"string"},"updated":{"type":"string","format":"date-time"},"user":{"$ref":"#/definitions/User"},"userVesselRole":{"$ref":"#/definitions/UserVesselRole"}},"title":"Resource«Invite»","xml":{"name":"Resource«Invite»","attribute":false,"wrapped":false}},"Resource«User»":{"type":"object","properties":{"address":{"$ref":"#/definitions/Address"},"created":{"type":"string","format":"date-time"},"deleted":{"type":"string","format":"date-time"},"email":{"type":"string"},"familyName":{"type":"string"},"firstName":{"type":"string"},"id":{"type":"string","format":"uuid"},"invites":{"type":"array","items":{"$ref":"#/definitions/Invite"}},"links":{"type":"array","xml":{"name":"link","namespace":"http://www.w3.org/2005/Atom","attribute":false,"wrapped":false},"items":{"$ref":"#/definitions/Link"}},"phone":{"type":"string"},"updated":{"type":"string","format":"date-time"},"userVesselRoles":{"type":"array","items":{"$ref":"#/definitions/UserVesselRole"}}},"title":"Resource«User»"},"ResponseEntity":{"type":"object","properties":{"body":{"type":"object"},"statusCode":{"type":"string","enum":["100 CONTINUE","101 SWITCHING_PROTOCOLS","102 PROCESSING","103 CHECKPOINT","200 OK","201 CREATED","202 ACCEPTED","203 NON_AUTHORITATIVE_INFORMATION","204 NO_CONTENT","205 RESET_CONTENT","206 PARTIAL_CONTENT","207 MULTI_STATUS","208 ALREADY_REPORTED","226 IM_USED","300 MULTIPLE_CHOICES","301 MOVED_PERMANENTLY","302 FOUND","302 MOVED_TEMPORARILY","303 SEE_OTHER","304 NOT_MODIFIED","305 USE_PROXY","307 TEMPORARY_REDIRECT","308 PERMANENT_REDIRECT","400 BAD_REQUEST","401 UNAUTHORIZED","402 PAYMENT_REQUIRED","403 FORBIDDEN","404 NOT_FOUND","405 METHOD_NOT_ALLOWED","406 NOT_ACCEPTABLE","407 PROXY_AUTHENTICATION_REQUIRED","408 REQUEST_TIMEOUT","409 CONFLICT","410 GONE","411 LENGTH_REQUIRED","412 PRECONDITION_FAILED","413 PAYLOAD_TOO_LARGE","413 REQUEST_ENTITY_TOO_LARGE","414 URI_TOO_LONG","414 REQUEST_URI_TOO_LONG","415 UNSUPPORTED_MEDIA_TYPE","416 REQUESTED_RANGE_NOT_SATISFIABLE","417 EXPECTATION_FAILED","418 I_AM_A_TEAPOT","419 INSUFFICIENT_SPACE_ON_RESOURCE","420 METHOD_FAILURE","421 DESTINATION_LOCKED","422 UNPROCESSABLE_ENTITY","423 LOCKED","424 FAILED_DEPENDENCY","426 UPGRADE_REQUIRED","428 PRECONDITION_REQUIRED","429 TOO_MANY_REQUESTS","431 REQUEST_HEADER_FIELDS_TOO_LARGE","451 UNAVAILABLE_FOR_LEGAL_REASONS","500 INTERNAL_SERVER_ERROR","501 NOT_IMPLEMENTED","502 BAD_GATEWAY","503 SERVICE_UNAVAILABLE","504 GATEWAY_TIMEOUT","505 HTTP_VERSION_NOT_SUPPORTED","506 VARIANT_ALSO_NEGOTIATES","507 INSUFFICIENT_STORAGE","508 LOOP_DETECTED","509 BANDWIDTH_LIMIT_EXCEEDED","510 NOT_EXTENDED","511 NETWORK_AUTHENTICATION_REQUIRED"]},"statusCodeValue":{"type":"integer","format":"int32"}},"title":"ResponseEntity"},"SignInRequest":{"type":"object","properties":{"password":{"type":"string"},"username":{"type":"string"}},"title":"SignInRequest"},"SignUpPassword":{"type":"object","properties":{"password":{"type":"string"}},"title":"SignUpPassword"},"User":{"type":"object","properties":{"address":{"$ref":"#/definitions/Address"},"created":{"type":"string","format":"date-time"},"deleted":{"type":"string","format":"date-time"},"email":{"type":"string"},"familyName":{"type":"string"},"firstName":{"type":"string"},"id":{"type":"string","format":"uuid"},"invites":{"type":"array","items":{"$ref":"#/definitions/Invite"}},"phone":{"type":"string"},"updated":{"type":"string","format":"date-time"},"userVesselRoles":{"type":"array","items":{"$ref":"#/definitions/UserVesselRole"}}},"title":"User"},"UserVesselRole":{"type":"object","properties":{"created":{"type":"string","format":"date-time"},"deleted":{"type":"string","format":"date-time"},"effectiveFrom":{"type":"string","format":"date-time"},"effectiveTo":{"type":"string","format":"date-time"},"id":{"type":"string","format":"uuid"},"invite":{"$ref":"#/definitions/Invite"},"role":{"type":"string","enum":["OWNER","SKIPPER","AGENT"]},"updated":{"type":"string","format":"date-time"},"user":{"$ref":"#/definitions/User"},"vessel":{"$ref":"#/definitions/Vessel"}},"title":"UserVesselRole"},"Vessel":{"type":"object","properties":{"id":{"type":"string","format":"uuid"}},"title":"Vessel"},"View":{"type":"object","properties":{"contentType":{"type":"string"}},"title":"View"}}}
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "UserService",
+    "version": "1.0.0",
+    "title": "SDS User Service",
+    "contact": {},
+    "license": {
+      "url": "http://unlicense.org"
+    }
+  },
+  "host": "sds-user-service.sds.svc.cluster.local",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "Invite Entity",
+      "description": "Simple Jpa Repository"
+    },
+    {
+      "name": "User Entity",
+      "description": "Simple Jpa Repository"
+    },
+    {
+      "name": "account-controller",
+      "description": "Account Controller"
+    },
+    {
+      "name": "hal-browser",
+      "description": "Hal Browser"
+    },
+    {
+      "name": "invite-controller",
+      "description": "Invite Controller"
+    },
+    {
+      "name": "profile-controller",
+      "description": "Profile Controller"
+    }
+  ],
+  "paths": {
+    "/v1/": {
+      "get": {
+        "tags": [
+          "hal-browser"
+        ],
+        "summary": "index",
+        "operationId": "indexUsingGET",
+        "produces": [
+          "text/html"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/View"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/browser": {
+      "get": {
+        "tags": [
+          "hal-browser"
+        ],
+        "summary": "browser",
+        "operationId": "browserUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/View"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/commands/create-and-invite-user-to-vessel": {
+      "post": {
+        "tags": [
+          "invite-controller"
+        ],
+        "summary": "Creates and invites a user to a vessel",
+        "operationId": "inviteUserUsingPOST_1",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "createAndInviteUserRequest",
+            "description": "createAndInviteUserRequest",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateAndInviteUserRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "201": {
+            "description": "Operation performed successfully",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "401": {
+            "description": "User not authenticated",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "403": {
+            "description": "User not authorised to perform operation",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "404": {
+            "description": "Resource could not be found",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "500": {
+            "description": "Error occurred while performing operation",
+            "schema": {
+              "type": "string"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/commands/deleteUser/{userId}": {
+      "delete": {
+        "tags": [
+          "account-controller"
+        ],
+        "summary": "Causes a 'soft' delete of the user from the user service, removing any role against any vessel, and removing any skippers from any vessels they are the sole Owner of.",
+        "operationId": "deleteUserUsingDELETE",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "userId",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation performed successfully",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "401": {
+            "description": "User not authenticated",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "403": {
+            "description": "User not authorised to perform operation",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "404": {
+            "description": "Resource could not be found",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "500": {
+            "description": "Error occurred while performing operation",
+            "schema": {
+              "type": "string"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/commands/invite-user-to-vessel": {
+      "post": {
+        "tags": [
+          "invite-controller"
+        ],
+        "summary": "Invites a user to a vessel",
+        "operationId": "inviteUserUsingPOST_2",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "inviteUserToVesselRequest",
+            "description": "inviteUserToVesselRequest",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/InviteUserToVesselRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "201": {
+            "description": "Operation performed successfully",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "401": {
+            "description": "User not authenticated",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "403": {
+            "description": "User not authorised to perform operation",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "404": {
+            "description": "Resource could not be found",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "500": {
+            "description": "Error occurred while performing operation",
+            "schema": {
+              "type": "string"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/commands/post-signin-actions/{userId}": {
+      "get": {
+        "tags": [
+          "account-controller"
+        ],
+        "summary": "Retrieves all the actions the user has to perform after signing in",
+        "operationId": "postSignInActionsUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "userId",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation performed successfully",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "401": {
+            "description": "User not authenticated",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "403": {
+            "description": "User not authorised to perform operation",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "404": {
+            "description": "Resource could not be found",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "500": {
+            "description": "Error occurred while performing operation",
+            "schema": {
+              "type": "string"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/commands/resetPassword": {
+      "post": {
+        "tags": [
+          "invite-controller"
+        ],
+        "summary": "Sends a Reset Password email",
+        "operationId": "resetPasswordUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "email",
+            "description": "email",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/commands/signin": {
+      "post": {
+        "tags": [
+          "account-controller"
+        ],
+        "summary": "Performs the sign in of a user",
+        "operationId": "signInUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "signInRequest",
+            "description": "signInRequest",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SignInRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "201": {
+            "description": "Operation performed successfully",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "401": {
+            "description": "User not authenticated",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "403": {
+            "description": "User not authorised to perform operation",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "404": {
+            "description": "Resource could not be found",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "500": {
+            "description": "Error occurred while performing operation",
+            "schema": {
+              "type": "string"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/commands/signout/{idToken}": {
+      "post": {
+        "tags": [
+          "account-controller"
+        ],
+        "summary": "Performs the sign out of a user",
+        "operationId": "signOutUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "idToken",
+            "in": "path",
+            "description": "idToken",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "201": {
+            "description": "Operation performed successfully",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "401": {
+            "description": "User not authenticated",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "403": {
+            "description": "User not authorised to perform operation",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "404": {
+            "description": "Resource could not be found",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "500": {
+            "description": "Error occurred while performing operation",
+            "schema": {
+              "type": "string"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/commands/signup/{token}": {
+      "post": {
+        "tags": [
+          "account-controller"
+        ],
+        "summary": "Creates an account for an invited user",
+        "operationId": "signUpUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "password",
+            "description": "password",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SignUpPassword"
+            }
+          },
+          {
+            "name": "token",
+            "in": "path",
+            "description": "token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "201": {
+            "description": "Operation performed successfully",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "401": {
+            "description": "User not authenticated",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "403": {
+            "description": "User not authorised to perform operation",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "404": {
+            "description": "Resource could not be found",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "500": {
+            "description": "Error occurred while performing operation",
+            "schema": {
+              "type": "string"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/invites": {
+      "get": {
+        "tags": [
+          "Invite Entity"
+        ],
+        "summary": "findAllInvite",
+        "operationId": "findAllInviteUsingGET",
+        "produces": [
+          "application/json",
+          "application/hal+json",
+          "text/uri-list",
+          "application/x-spring-data-compact+json"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "page",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "size",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "sort",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Resources«Invite»"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/invites/{id}": {
+      "get": {
+        "tags": [
+          "Invite Entity"
+        ],
+        "summary": "findByIdInvite",
+        "operationId": "findByIdInviteUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Resource«Invite»"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/invites/{id}/user": {
+      "get": {
+        "tags": [
+          "Invite Entity"
+        ],
+        "summary": "inviteUser",
+        "operationId": "inviteUserUsingGET",
+        "produces": [
+          "application/hal+json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Resource«User»"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "post": {
+        "tags": [
+          "Invite Entity"
+        ],
+        "summary": "inviteUser",
+        "operationId": "inviteUserUsingPOST",
+        "consumes": [
+          "text/uri-list",
+          "application/x-spring-data-compact+json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "body",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Resource«User»"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "put": {
+        "tags": [
+          "Invite Entity"
+        ],
+        "summary": "inviteUser",
+        "operationId": "inviteUserUsingPUT",
+        "consumes": [
+          "text/uri-list",
+          "application/x-spring-data-compact+json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "body",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Resource«User»"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "delete": {
+        "tags": [
+          "Invite Entity"
+        ],
+        "summary": "inviteUser",
+        "operationId": "inviteUserUsingDELETE",
+        "consumes": [
+          "text/uri-list",
+          "application/x-spring-data-compact+json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "deprecated": false
+      },
+      "patch": {
+        "tags": [
+          "Invite Entity"
+        ],
+        "summary": "inviteUser",
+        "operationId": "inviteUserUsingPATCH",
+        "consumes": [
+          "text/uri-list",
+          "application/x-spring-data-compact+json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "body",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Resource«User»"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/profile": {
+      "get": {
+        "tags": [
+          "profile-controller"
+        ],
+        "summary": "listAllFormsOfMetadata",
+        "operationId": "listAllFormsOfMetadataUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResourceSupport"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "options": {
+        "tags": [
+          "profile-controller"
+        ],
+        "summary": "profileOptions",
+        "operationId": "profileOptionsUsingOPTIONS",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/users": {
+      "get": {
+        "tags": [
+          "User Entity"
+        ],
+        "summary": "findAllUser",
+        "operationId": "findAllUserUsingGET",
+        "produces": [
+          "application/json",
+          "application/hal+json",
+          "text/uri-list",
+          "application/x-spring-data-compact+json"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "page",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "size",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "sort",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Resources«User»"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "post": {
+        "tags": [
+          "User Entity"
+        ],
+        "summary": "saveUser",
+        "operationId": "saveUserUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Resource«User»"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/users/{id}": {
+      "get": {
+        "tags": [
+          "User Entity"
+        ],
+        "summary": "findByIdUser",
+        "operationId": "findByIdUserUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Resource«User»"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "put": {
+        "tags": [
+          "User Entity"
+        ],
+        "summary": "saveUser",
+        "operationId": "saveUserUsingPUT",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Resource«User»"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "patch": {
+        "tags": [
+          "User Entity"
+        ],
+        "summary": "saveUser",
+        "operationId": "saveUserUsingPATCH",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Resource«User»"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/users/{id}/invites": {
+      "get": {
+        "tags": [
+          "User Entity"
+        ],
+        "summary": "userInvites",
+        "operationId": "userInvitesUsingGET",
+        "produces": [
+          "application/hal+json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Resources«Invite»"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "post": {
+        "tags": [
+          "User Entity"
+        ],
+        "summary": "userInvites",
+        "operationId": "userInvitesUsingPOST",
+        "consumes": [
+          "text/uri-list",
+          "application/x-spring-data-compact+json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "body",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Resources«Invite»"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "put": {
+        "tags": [
+          "User Entity"
+        ],
+        "summary": "userInvites",
+        "operationId": "userInvitesUsingPUT",
+        "consumes": [
+          "text/uri-list",
+          "application/x-spring-data-compact+json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "body",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Resources«Invite»"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "delete": {
+        "tags": [
+          "User Entity"
+        ],
+        "summary": "userInvites",
+        "operationId": "userInvitesUsingDELETE",
+        "consumes": [
+          "text/uri-list",
+          "application/x-spring-data-compact+json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "deprecated": false
+      },
+      "patch": {
+        "tags": [
+          "User Entity"
+        ],
+        "summary": "userInvites",
+        "operationId": "userInvitesUsingPATCH",
+        "consumes": [
+          "text/uri-list",
+          "application/x-spring-data-compact+json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "body",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Resources«Invite»"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/users/{id}/invites/{inviteId}": {
+      "get": {
+        "tags": [
+          "User Entity"
+        ],
+        "summary": "userInvites",
+        "operationId": "userInvitesUsingGET_1",
+        "consumes": [
+          "application/hal+json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "name": "inviteId",
+            "in": "path",
+            "description": "inviteId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Resource«Invite»"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "delete": {
+        "tags": [
+          "User Entity"
+        ],
+        "summary": "userInvites",
+        "operationId": "userInvitesUsingDELETE_1",
+        "consumes": [
+          "text/uri-list",
+          "application/x-spring-data-compact+json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "name": "inviteId",
+            "in": "path",
+            "description": "inviteId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "deprecated": false
+      }
+    }
+  },
+  "definitions": {
+    "Address": {
+      "type": "object",
+      "properties": {
+        "address1": {
+          "type": "string"
+        },
+        "address2": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        },
+        "county": {
+          "type": "string"
+        },
+        "created": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "deleted": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "poBox": {
+          "type": "string"
+        },
+        "postcode": {
+          "type": "string"
+        },
+        "updated": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "user": {
+          "$ref": "#/definitions/User"
+        }
+      },
+      "title": "Address"
+    },
+    "CreateAndInviteUserRequest": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string",
+          "enum": [
+            "OWNER",
+            "SKIPPER",
+            "AGENT"
+          ]
+        },
+        "validFrom": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "validTo": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "vesselId": {
+          "type": "string",
+          "format": "uuid"
+        }
+      },
+      "title": "CreateAndInviteUserRequest"
+    },
+    "EmbeddedCollection«Invite»": {
+      "type": "object",
+      "required": [
+        "invites"
+      ],
+      "properties": {
+        "invites": {
+          "type": "array",
+          "description": "Resource collection",
+          "items": {
+            "$ref": "#/definitions/Invite"
+          }
+        }
+      },
+      "title": "EmbeddedCollection«Invite»",
+      "description": "Embedded collection of Invite"
+    },
+    "EmbeddedCollection«User»": {
+      "type": "object",
+      "required": [
+        "users"
+      ],
+      "properties": {
+        "users": {
+          "type": "array",
+          "description": "Resource collection",
+          "items": {
+            "$ref": "#/definitions/User"
+          }
+        }
+      },
+      "title": "EmbeddedCollection«User»",
+      "xml": {
+        "name": "content",
+        "wrapped": true
+      },
+      "description": "Embedded collection of User"
+    },
+    "IdToken": {
+      "type": "object",
+      "properties": {
+        "expiresIn": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "token": {
+          "type": "string"
+        },
+        "userId": {
+          "type": "string",
+          "format": "uuid"
+        }
+      },
+      "title": "IdToken"
+    },
+    "Invite": {
+      "type": "object",
+      "properties": {
+        "created": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "deleted": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "token": {
+          "type": "string"
+        },
+        "updated": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "user": {
+          "$ref": "#/definitions/User"
+        },
+        "userVesselRole": {
+          "$ref": "#/definitions/UserVesselRole"
+        }
+      },
+      "title": "Invite"
+    },
+    "InviteUserToVesselRequest": {
+      "type": "object",
+      "properties": {
+        "effectiveFrom": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "effectiveTo": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "role": {
+          "type": "string",
+          "enum": [
+            "OWNER",
+            "SKIPPER",
+            "AGENT"
+          ]
+        },
+        "userId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "vesselId": {
+          "type": "string",
+          "format": "uuid"
+        }
+      },
+      "title": "InviteUserToVesselRequest"
+    },
+    "Link": {
+      "type": "object",
+      "properties": {
+        "deprecation": {
+          "type": "string",
+          "xml": {
+            "name": "deprecation",
+            "attribute": true,
+            "wrapped": false
+          }
+        },
+        "href": {
+          "type": "string",
+          "xml": {
+            "name": "href",
+            "attribute": true,
+            "wrapped": false
+          }
+        },
+        "hreflang": {
+          "type": "string",
+          "xml": {
+            "name": "hreflang",
+            "attribute": true,
+            "wrapped": false
+          }
+        },
+        "media": {
+          "type": "string",
+          "xml": {
+            "name": "media",
+            "attribute": true,
+            "wrapped": false
+          }
+        },
+        "rel": {
+          "type": "string",
+          "xml": {
+            "name": "rel",
+            "attribute": true,
+            "wrapped": false
+          }
+        },
+        "templated": {
+          "type": "boolean"
+        },
+        "title": {
+          "type": "string",
+          "xml": {
+            "name": "title",
+            "attribute": true,
+            "wrapped": false
+          }
+        },
+        "type": {
+          "type": "string",
+          "xml": {
+            "name": "type",
+            "attribute": true,
+            "wrapped": false
+          }
+        }
+      },
+      "title": "Link",
+      "xml": {
+        "name": "link",
+        "namespace": "http://www.w3.org/2005/Atom",
+        "attribute": false,
+        "wrapped": false
+      }
+    },
+    "ResourceSupport": {
+      "type": "object",
+      "properties": {
+        "links": {
+          "type": "array",
+          "xml": {
+            "name": "link",
+            "namespace": "http://www.w3.org/2005/Atom",
+            "attribute": false,
+            "wrapped": false
+          },
+          "items": {
+            "$ref": "#/definitions/Link"
+          }
+        }
+      },
+      "title": "ResourceSupport"
+    },
+    "Resources«Invite»": {
+      "type": "object",
+      "required": [
+        "_embedded",
+        "_links"
+      ],
+      "properties": {
+        "_embedded": {
+          "$ref": "#/definitions/EmbeddedCollection«Invite»"
+        },
+        "_links": {
+          "type": "object",
+          "description": "Link collection",
+          "additionalProperties": {
+            "$ref": "#/definitions/Link"
+          }
+        }
+      },
+      "title": "Resources«Invite»",
+      "description": "Resources of Invite"
+    },
+    "Resources«User»": {
+      "type": "object",
+      "required": [
+        "_embedded",
+        "_links"
+      ],
+      "properties": {
+        "_embedded": {
+          "$ref": "#/definitions/EmbeddedCollection«User»"
+        },
+        "_links": {
+          "type": "object",
+          "description": "Link collection",
+          "additionalProperties": {
+            "$ref": "#/definitions/Link"
+          }
+        }
+      },
+      "title": "Resources«User»",
+      "xml": {
+        "name": "entities",
+        "attribute": false,
+        "wrapped": false
+      },
+      "description": "Resources of User"
+    },
+    "Resource«Invite»": {
+      "type": "object",
+      "properties": {
+        "created": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "deleted": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "links": {
+          "type": "array",
+          "xml": {
+            "name": "link",
+            "namespace": "http://www.w3.org/2005/Atom",
+            "attribute": false,
+            "wrapped": false
+          },
+          "items": {
+            "$ref": "#/definitions/Link"
+          }
+        },
+        "token": {
+          "type": "string"
+        },
+        "updated": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "user": {
+          "$ref": "#/definitions/User"
+        },
+        "userVesselRole": {
+          "$ref": "#/definitions/UserVesselRole"
+        }
+      },
+      "title": "Resource«Invite»",
+      "xml": {
+        "name": "Resource«Invite»",
+        "attribute": false,
+        "wrapped": false
+      }
+    },
+    "Resource«User»": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "$ref": "#/definitions/Address"
+        },
+        "created": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "deleted": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "email": {
+          "type": "string"
+        },
+        "familyName": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "invites": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Invite"
+          }
+        },
+        "links": {
+          "type": "array",
+          "xml": {
+            "name": "link",
+            "namespace": "http://www.w3.org/2005/Atom",
+            "attribute": false,
+            "wrapped": false
+          },
+          "items": {
+            "$ref": "#/definitions/Link"
+          }
+        },
+        "phone": {
+          "type": "string"
+        },
+        "updated": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "userVesselRoles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/UserVesselRole"
+          }
+        }
+      },
+      "title": "Resource«User»"
+    },
+    "ResponseEntity": {
+      "type": "object",
+      "properties": {
+        "body": {
+          "type": "object"
+        },
+        "statusCode": {
+          "type": "string",
+          "enum": [
+            "100 CONTINUE",
+            "101 SWITCHING_PROTOCOLS",
+            "102 PROCESSING",
+            "103 CHECKPOINT",
+            "200 OK",
+            "201 CREATED",
+            "202 ACCEPTED",
+            "203 NON_AUTHORITATIVE_INFORMATION",
+            "204 NO_CONTENT",
+            "205 RESET_CONTENT",
+            "206 PARTIAL_CONTENT",
+            "207 MULTI_STATUS",
+            "208 ALREADY_REPORTED",
+            "226 IM_USED",
+            "300 MULTIPLE_CHOICES",
+            "301 MOVED_PERMANENTLY",
+            "302 FOUND",
+            "302 MOVED_TEMPORARILY",
+            "303 SEE_OTHER",
+            "304 NOT_MODIFIED",
+            "305 USE_PROXY",
+            "307 TEMPORARY_REDIRECT",
+            "308 PERMANENT_REDIRECT",
+            "400 BAD_REQUEST",
+            "401 UNAUTHORIZED",
+            "402 PAYMENT_REQUIRED",
+            "403 FORBIDDEN",
+            "404 NOT_FOUND",
+            "405 METHOD_NOT_ALLOWED",
+            "406 NOT_ACCEPTABLE",
+            "407 PROXY_AUTHENTICATION_REQUIRED",
+            "408 REQUEST_TIMEOUT",
+            "409 CONFLICT",
+            "410 GONE",
+            "411 LENGTH_REQUIRED",
+            "412 PRECONDITION_FAILED",
+            "413 PAYLOAD_TOO_LARGE",
+            "413 REQUEST_ENTITY_TOO_LARGE",
+            "414 URI_TOO_LONG",
+            "414 REQUEST_URI_TOO_LONG",
+            "415 UNSUPPORTED_MEDIA_TYPE",
+            "416 REQUESTED_RANGE_NOT_SATISFIABLE",
+            "417 EXPECTATION_FAILED",
+            "418 I_AM_A_TEAPOT",
+            "419 INSUFFICIENT_SPACE_ON_RESOURCE",
+            "420 METHOD_FAILURE",
+            "421 DESTINATION_LOCKED",
+            "422 UNPROCESSABLE_ENTITY",
+            "423 LOCKED",
+            "424 FAILED_DEPENDENCY",
+            "426 UPGRADE_REQUIRED",
+            "428 PRECONDITION_REQUIRED",
+            "429 TOO_MANY_REQUESTS",
+            "431 REQUEST_HEADER_FIELDS_TOO_LARGE",
+            "451 UNAVAILABLE_FOR_LEGAL_REASONS",
+            "500 INTERNAL_SERVER_ERROR",
+            "501 NOT_IMPLEMENTED",
+            "502 BAD_GATEWAY",
+            "503 SERVICE_UNAVAILABLE",
+            "504 GATEWAY_TIMEOUT",
+            "505 HTTP_VERSION_NOT_SUPPORTED",
+            "506 VARIANT_ALSO_NEGOTIATES",
+            "507 INSUFFICIENT_STORAGE",
+            "508 LOOP_DETECTED",
+            "509 BANDWIDTH_LIMIT_EXCEEDED",
+            "510 NOT_EXTENDED",
+            "511 NETWORK_AUTHENTICATION_REQUIRED"
+          ]
+        },
+        "statusCodeValue": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "ResponseEntity"
+    },
+    "SignInRequest": {
+      "type": "object",
+      "properties": {
+        "password": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        }
+      },
+      "title": "SignInRequest"
+    },
+    "SignUpPassword": {
+      "type": "object",
+      "properties": {
+        "password": {
+          "type": "string"
+        }
+      },
+      "title": "SignUpPassword"
+    },
+    "User": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "$ref": "#/definitions/Address"
+        },
+        "created": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "deleted": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "email": {
+          "type": "string"
+        },
+        "familyName": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "invites": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Invite"
+          }
+        },
+        "phone": {
+          "type": "string"
+        },
+        "updated": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "userVesselRoles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/UserVesselRole"
+          }
+        }
+      },
+      "title": "User"
+    },
+    "UserVesselRole": {
+      "type": "object",
+      "properties": {
+        "created": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "deleted": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "effectiveFrom": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "effectiveTo": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "invite": {
+          "$ref": "#/definitions/Invite"
+        },
+        "role": {
+          "type": "string",
+          "enum": [
+            "OWNER",
+            "SKIPPER",
+            "AGENT"
+          ]
+        },
+        "updated": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "user": {
+          "$ref": "#/definitions/User"
+        },
+        "vessel": {
+          "$ref": "#/definitions/Vessel"
+        }
+      },
+      "title": "UserVesselRole"
+    },
+    "Vessel": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        }
+      },
+      "title": "Vessel"
+    },
+    "View": {
+      "type": "object",
+      "properties": {
+        "contentType": {
+          "type": "string"
+        }
+      },
+      "title": "View"
+    }
+  }
+}

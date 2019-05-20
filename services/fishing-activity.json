@@ -1,0 +1,1432 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "FAService",
+    "version": "1.0.0",
+    "title": "SDS FA Service",
+    "contact": {},
+    "license": {
+      "url": "http://unlicense.org"
+    }
+  },
+  "host": "localhost:9087",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "fishing-activity-report-controller",
+      "description": "Fishing Activity Report Controller"
+    },
+    {
+      "name": "fishing-trip-controller",
+      "description": "Fishing Trip Controller"
+    },
+    {
+      "name": "hal-browser",
+      "description": "Hal Browser"
+    },
+    {
+      "name": "profile-controller",
+      "description": "Profile Controller"
+    }
+  ],
+  "paths": {
+    "/v1/": {
+      "get": {
+        "tags": [
+          "hal-browser"
+        ],
+        "summary": "index",
+        "operationId": "indexUsingGET",
+        "produces": [
+          "text/html"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/View"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/browser": {
+      "get": {
+        "tags": [
+          "hal-browser"
+        ],
+        "summary": "browser",
+        "operationId": "browserUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/View"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/commands/createNewFishingActivityReport": {
+      "post": {
+        "tags": [
+          "fishing-activity-report-controller"
+        ],
+        "summary": "Creates a new FishingActivityReport",
+        "operationId": "createNewFishingActivityReportUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "createNewFishingActivityReportCommand",
+            "description": "createNewFishingActivityReportCommand",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateNewFishingActivityReportCommand"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "201": {
+            "description": "Successful",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "400": {
+            "description": "Invalid payloud",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "403": {
+            "description": "User not authorised to perform operation",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "500": {
+            "description": "Error occurred while performing operation",
+            "schema": {
+              "type": "string"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/fishingActivityReports": {
+      "get": {
+        "tags": [
+          "fishing-activity-report-controller"
+        ],
+        "summary": "Unified Search of FishingActivityReports by cfr, trip id, userId, or vesselId",
+        "operationId": "searchUsingGET",
+        "produces": [
+          "*/*",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "cfr",
+            "in": "query",
+            "description": "The cfr",
+            "required": false,
+            "type": "string",
+            "allowEmptyValue": false
+          },
+          {
+            "name": "fishingActivityType",
+            "in": "query",
+            "description": "The fishing activity type",
+            "required": false,
+            "type": "string",
+            "allowEmptyValue": false
+          },
+          {
+            "name": "gbrrn",
+            "in": "query",
+            "description": "The gbrrn type",
+            "required": false,
+            "type": "string",
+            "allowEmptyValue": false
+          },
+          {
+            "name": "occurrenceDateFrom",
+            "in": "query",
+            "description": "The lower bound for occurence date",
+            "required": false,
+            "type": "string",
+            "allowEmptyValue": false
+          },
+          {
+            "name": "occurrenceDateTo",
+            "in": "query",
+            "description": "The upper bound for occurence date",
+            "required": false,
+            "type": "string",
+            "allowEmptyValue": false
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "purpose",
+            "in": "query",
+            "description": "The purpose",
+            "required": false,
+            "type": "string",
+            "allowEmptyValue": false
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "tripId",
+            "in": "query",
+            "description": "The trip id",
+            "required": false,
+            "type": "string",
+            "allowEmptyValue": false
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "The report type",
+            "required": false,
+            "type": "string",
+            "allowEmptyValue": false
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "description": "The user id",
+            "required": false,
+            "type": "string",
+            "allowEmptyValue": false
+          },
+          {
+            "name": "vesselId",
+            "in": "query",
+            "description": "The vessel id",
+            "required": false,
+            "type": "string",
+            "allowEmptyValue": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "403": {
+            "description": "User not authorised to perform operation",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "404": {
+            "description": "Resource could not be found",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "500": {
+            "description": "Error occurred while performing operation",
+            "schema": {
+              "type": "string"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/fishingActivityReports/gbrrn/distinct": {
+      "get": {
+        "tags": [
+          "fishing-activity-report-controller"
+        ],
+        "summary": "Unified Search of FishingActivityReports by cfr, trip id, userId, or vesselId",
+        "operationId": "distinctGbrrnsByDocumentIdsUsingGET",
+        "produces": [
+          "*/*",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "ids",
+            "in": "query",
+            "description": "The ids",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "collectionFormat": "multi",
+            "allowEmptyValue": false
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "403": {
+            "description": "User not authorised to perform operation",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "404": {
+            "description": "Resource could not be found",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "500": {
+            "description": "Error occurred while performing operation",
+            "schema": {
+              "type": "string"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/fishingActivityReports/{id}": {
+      "get": {
+        "tags": [
+          "fishing-activity-report-controller"
+        ],
+        "summary": "Retrieves a FishingActivityReport by Id",
+        "operationId": "findByIdUsingGET",
+        "produces": [
+          "*/*",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "403": {
+            "description": "User not authorised to perform operation",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "404": {
+            "description": "Resource could not be found",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "500": {
+            "description": "Error occurred while performing operation",
+            "schema": {
+              "type": "string"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/fishingTrips": {
+      "get": {
+        "tags": [
+          "fishing-trip-controller"
+        ],
+        "summary": "Unified Search for FishingTrips by cfr or trip id",
+        "operationId": "searchUsingGET_1",
+        "produces": [
+          "*/*",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "cfr",
+            "in": "query",
+            "description": "The cfr",
+            "required": false,
+            "type": "string",
+            "allowEmptyValue": false
+          },
+          {
+            "name": "fishingActivityType",
+            "in": "query",
+            "description": "The fishing activity type",
+            "required": false,
+            "type": "string",
+            "allowEmptyValue": false
+          },
+          {
+            "name": "gbrrn",
+            "in": "query",
+            "description": "The gbrrn type",
+            "required": false,
+            "type": "string",
+            "allowEmptyValue": false
+          },
+          {
+            "name": "occurrenceDateFrom",
+            "in": "query",
+            "description": "The lower bound for occurence date",
+            "required": false,
+            "type": "string",
+            "allowEmptyValue": false
+          },
+          {
+            "name": "occurrenceDateTo",
+            "in": "query",
+            "description": "The upper bound for occurence date",
+            "required": false,
+            "type": "string",
+            "allowEmptyValue": false
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "purpose",
+            "in": "query",
+            "description": "The purpose",
+            "required": false,
+            "type": "string",
+            "allowEmptyValue": false
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "tripId",
+            "in": "query",
+            "description": "The trip id",
+            "required": false,
+            "type": "string",
+            "allowEmptyValue": false
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "The report type",
+            "required": false,
+            "type": "string",
+            "allowEmptyValue": false
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "description": "The user id",
+            "required": false,
+            "type": "string",
+            "allowEmptyValue": false
+          },
+          {
+            "name": "vesselId",
+            "in": "query",
+            "description": "The vessel id",
+            "required": false,
+            "type": "string",
+            "allowEmptyValue": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "403": {
+            "description": "User not authorised to perform operation",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "404": {
+            "description": "Resource could not be found",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "500": {
+            "description": "Error occurred while performing operation",
+            "schema": {
+              "type": "string"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/fishingTrips/{tripId}": {
+      "get": {
+        "tags": [
+          "fishing-trip-controller"
+        ],
+        "summary": "Retrieves a FishingTrip by Id",
+        "operationId": "findByIdUsingGET_1",
+        "produces": [
+          "*/*",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "tripId",
+            "in": "path",
+            "description": "tripId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "403": {
+            "description": "User not authorised to perform operation",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "404": {
+            "description": "Resource could not be found",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "500": {
+            "description": "Error occurred while performing operation",
+            "schema": {
+              "type": "string"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/profile": {
+      "get": {
+        "tags": [
+          "profile-controller"
+        ],
+        "summary": "listAllFormsOfMetadata",
+        "operationId": "listAllFormsOfMetadataUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResourceSupport"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "options": {
+        "tags": [
+          "profile-controller"
+        ],
+        "summary": "profileOptions",
+        "operationId": "profileOptionsUsingOPTIONS",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    }
+  },
+  "definitions": {
+    "Address": {
+      "type": "object",
+      "properties": {
+        "streetName": {
+          "type": "string"
+        }
+      },
+      "title": "Address"
+    },
+    "Catch": {
+      "type": "object",
+      "properties": {
+        "catchType": {
+          "type": "string"
+        },
+        "speciesCode": {
+          "type": "string"
+        },
+        "specifiedFLUXLocations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FLUXLocation"
+          }
+        },
+        "specifiedSizeDistribution": {
+          "type": "string"
+        },
+        "usedFishingGear": {
+          "$ref": "#/definitions/FishingGear"
+        },
+        "weightInKg": {
+          "type": "number"
+        }
+      },
+      "title": "Catch"
+    },
+    "ContactParties": {
+      "type": "object",
+      "properties": {
+        "master": {
+          "$ref": "#/definitions/ContactParty"
+        }
+      },
+      "title": "ContactParties"
+    },
+    "ContactParty": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "$ref": "#/definitions/Address"
+        },
+        "contactPerson": {
+          "$ref": "#/definitions/ContactPerson"
+        },
+        "ids": {
+          "$ref": "#/definitions/ContactPartyIds"
+        }
+      },
+      "title": "ContactParty"
+    },
+    "ContactPartyIds": {
+      "type": "object",
+      "properties": {
+        "internal": {
+          "type": "string"
+        }
+      },
+      "title": "ContactPartyIds"
+    },
+    "ContactPerson": {
+      "type": "object",
+      "properties": {
+        "alias": {
+          "type": "string"
+        }
+      },
+      "title": "ContactPerson"
+    },
+    "CreateNewFishingActivityReportCommand": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "acceptance": {
+          "type": "string",
+          "example": "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+        },
+        "creation": {
+          "type": "string",
+          "example": "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+        },
+        "faFmc": {
+          "type": "string",
+          "enum": [
+            "C",
+            "D",
+            "I",
+            "M"
+          ]
+        },
+        "fishingActivities": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FishingActivity"
+          }
+        },
+        "ids": {
+          "$ref": "#/definitions/FishingActivityReportIds"
+        },
+        "owner": {
+          "$ref": "#/definitions/Owner"
+        },
+        "referencedId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "specifiedFishingTrip": {
+          "$ref": "#/definitions/FishingTripId"
+        },
+        "specifiedVesselTransportMeans": {
+          "$ref": "#/definitions/VesselTransportMeans"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "DECLARATION",
+            "NOTIFICATION"
+          ]
+        }
+      },
+      "title": "CreateNewFishingActivityReportCommand"
+    },
+    "DelimitedPeriod": {
+      "type": "object",
+      "properties": {
+        "durationMinutes": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "endDateTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "startDateTime": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "title": "DelimitedPeriod"
+    },
+    "FLUXLocation": {
+      "type": "object",
+      "properties": {
+        "countryId": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "scheme": {
+          "type": "string",
+          "enum": [
+            "FA_BR",
+            "FLUX_GP_PARTY",
+            "UUID",
+            "FLUXTL_ON",
+            "FAO_AREA",
+            "STAT_RECTANGLE",
+            "TERRITORY",
+            "EFFORT_ZONE",
+            "GFCM_GSA",
+            "MANAGEMENT_AREA",
+            "FARM",
+            "LOCATION",
+            "EU_TRIP_ID",
+            "SALE_BR",
+            "ICCAT_AUTHORIZATION",
+            "JFO",
+            "MS",
+            "VAT",
+            "TAX",
+            "EU_SALES_ID"
+          ]
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "LOCATION",
+            "ADDRESS",
+            "AREA",
+            "POSITION"
+          ]
+        }
+      },
+      "title": "FLUXLocation"
+    },
+    "FishingActivity": {
+      "type": "object",
+      "properties": {
+        "departureReason": {
+          "type": "string"
+        },
+        "occurrence": {
+          "type": "string",
+          "example": "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+        },
+        "relatedFLUXLocations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FLUXLocation"
+          }
+        },
+        "relatedFishingActivities": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FishingActivity"
+          }
+        },
+        "specifiedCatches": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Catch"
+          }
+        },
+        "specifiedDelimitedPeriods": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DelimitedPeriod"
+          }
+        },
+        "specifiedFishingGears": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FishingGear"
+          }
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "DEPARTURE",
+            "ARRIVAL",
+            "FISHING_OPERATION",
+            "GEAR_SHOT",
+            "DISCARD",
+            "GEAR_RETRIEVAL",
+            "LANDING",
+            "AREA_ENTRY",
+            "AREA_EXIT",
+            "RELOCATION",
+            "TRANSHIPMENT",
+            "JOINT_FISHING_OPERATION"
+          ]
+        }
+      },
+      "title": "FishingActivity"
+    },
+    "FishingActivityReport": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "acceptance": {
+          "type": "string",
+          "example": "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+        },
+        "creation": {
+          "type": "string",
+          "example": "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+        },
+        "faFmc": {
+          "type": "string",
+          "enum": [
+            "C",
+            "D",
+            "I",
+            "M"
+          ]
+        },
+        "fishingActivities": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FishingActivity"
+          }
+        },
+        "ids": {
+          "$ref": "#/definitions/FishingActivityReportIds"
+        },
+        "owner": {
+          "$ref": "#/definitions/Owner"
+        },
+        "purpose": {
+          "type": "string",
+          "enum": [
+            "ORIGINAL",
+            "REPLACE",
+            "DELETE",
+            "CANCELLATION"
+          ]
+        },
+        "referencedId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "specifiedFishingTrip": {
+          "$ref": "#/definitions/FishingTripId"
+        },
+        "specifiedVesselTransportMeans": {
+          "$ref": "#/definitions/VesselTransportMeans"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "DECLARATION",
+            "NOTIFICATION"
+          ]
+        },
+        "valid": {
+          "type": "boolean"
+        }
+      },
+      "title": "FishingActivityReport"
+    },
+    "FishingActivityReportIds": {
+      "type": "object",
+      "properties": {
+        "gbrrn": {
+          "type": "string"
+        }
+      },
+      "title": "FishingActivityReportIds"
+    },
+    "FishingActivityReportResource": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "acceptance": {
+          "type": "string",
+          "example": "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+        },
+        "creation": {
+          "type": "string",
+          "example": "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+        },
+        "faFmc": {
+          "type": "string",
+          "enum": [
+            "C",
+            "D",
+            "I",
+            "M"
+          ]
+        },
+        "fishingActivities": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FishingActivity"
+          }
+        },
+        "ids": {
+          "$ref": "#/definitions/FishingActivityReportIds"
+        },
+        "links": {
+          "type": "array",
+          "xml": {
+            "name": "link",
+            "namespace": "http://www.w3.org/2005/Atom",
+            "attribute": false,
+            "wrapped": false
+          },
+          "items": {
+            "$ref": "#/definitions/Link"
+          }
+        },
+        "owner": {
+          "$ref": "#/definitions/Owner"
+        },
+        "purpose": {
+          "type": "string",
+          "enum": [
+            "ORIGINAL",
+            "REPLACE",
+            "DELETE",
+            "CANCELLATION"
+          ]
+        },
+        "referencedId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "specifiedFishingTrip": {
+          "$ref": "#/definitions/FishingTripId"
+        },
+        "specifiedVesselTransportMeans": {
+          "$ref": "#/definitions/VesselTransportMeans"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "DECLARATION",
+            "NOTIFICATION"
+          ]
+        },
+        "valid": {
+          "type": "boolean"
+        }
+      },
+      "title": "FishingActivityReportResource"
+    },
+    "FishingGear": {
+      "type": "object",
+      "properties": {
+        "applicableGearCharacteristics": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/GearCharacteristic"
+          }
+        },
+        "roleCodes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "ONBOARD",
+              "DEPLOYED"
+            ]
+          }
+        },
+        "type": {
+          "type": "string"
+        }
+      },
+      "title": "FishingGear"
+    },
+    "FishingTripId": {
+      "type": "object",
+      "properties": {
+        "euTripId": {
+          "type": "string"
+        }
+      },
+      "title": "FishingTripId"
+    },
+    "FishingTripResource": {
+      "type": "object",
+      "properties": {
+        "fishingActivityReports": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FishingActivityReport"
+          }
+        },
+        "fishingTripId": {
+          "$ref": "#/definitions/FishingTripId"
+        },
+        "links": {
+          "type": "array",
+          "xml": {
+            "name": "link",
+            "namespace": "http://www.w3.org/2005/Atom",
+            "attribute": false,
+            "wrapped": false
+          },
+          "items": {
+            "$ref": "#/definitions/Link"
+          }
+        }
+      },
+      "title": "FishingTripResource"
+    },
+    "GearCharacteristic": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "BOOLEAN",
+            "CODE",
+            "DATETIME",
+            "FLAP_DOCUMENT",
+            "FLUX_LOCATION",
+            "MEASURE",
+            "NUMBER",
+            "QUANTITY",
+            "TEXT"
+          ]
+        },
+        "value": {
+          "type": "string"
+        },
+        "valueMeasure": {
+          "type": "number"
+        }
+      },
+      "title": "GearCharacteristic"
+    },
+    "Link": {
+      "type": "object",
+      "properties": {
+        "deprecation": {
+          "type": "string",
+          "xml": {
+            "name": "deprecation",
+            "attribute": true,
+            "wrapped": false
+          }
+        },
+        "href": {
+          "type": "string",
+          "xml": {
+            "name": "href",
+            "attribute": true,
+            "wrapped": false
+          }
+        },
+        "hreflang": {
+          "type": "string",
+          "xml": {
+            "name": "hreflang",
+            "attribute": true,
+            "wrapped": false
+          }
+        },
+        "media": {
+          "type": "string",
+          "xml": {
+            "name": "media",
+            "attribute": true,
+            "wrapped": false
+          }
+        },
+        "rel": {
+          "type": "string",
+          "xml": {
+            "name": "rel",
+            "attribute": true,
+            "wrapped": false
+          }
+        },
+        "templated": {
+          "type": "boolean"
+        },
+        "title": {
+          "type": "string",
+          "xml": {
+            "name": "title",
+            "attribute": true,
+            "wrapped": false
+          }
+        },
+        "type": {
+          "type": "string",
+          "xml": {
+            "name": "type",
+            "attribute": true,
+            "wrapped": false
+          }
+        }
+      },
+      "title": "Link",
+      "xml": {
+        "name": "link",
+        "namespace": "http://www.w3.org/2005/Atom",
+        "attribute": false,
+        "wrapped": false
+      }
+    },
+    "Owner": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "title": "Owner"
+    },
+    "PageMetadata": {
+      "type": "object",
+      "properties": {
+        "number": {
+          "type": "integer",
+          "format": "int64",
+          "xml": {
+            "name": "number",
+            "attribute": true,
+            "wrapped": false
+          }
+        },
+        "size": {
+          "type": "integer",
+          "format": "int64",
+          "xml": {
+            "name": "size",
+            "attribute": true,
+            "wrapped": false
+          }
+        },
+        "totalElements": {
+          "type": "integer",
+          "format": "int64",
+          "xml": {
+            "name": "totalElements",
+            "attribute": true,
+            "wrapped": false
+          }
+        },
+        "totalPages": {
+          "type": "integer",
+          "format": "int64",
+          "xml": {
+            "name": "totalPages",
+            "attribute": true,
+            "wrapped": false
+          }
+        }
+      },
+      "title": "PageMetadata"
+    },
+    "PagedResources«FishingActivityReportResource»": {
+      "type": "object",
+      "properties": {
+        "content": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FishingActivityReportResource"
+          }
+        },
+        "links": {
+          "type": "array",
+          "xml": {
+            "name": "link",
+            "namespace": "http://www.w3.org/2005/Atom",
+            "attribute": false,
+            "wrapped": false
+          },
+          "items": {
+            "$ref": "#/definitions/Link"
+          }
+        },
+        "page": {
+          "$ref": "#/definitions/PageMetadata"
+        }
+      },
+      "title": "PagedResources«FishingActivityReportResource»",
+      "xml": {
+        "name": "pagedEntities",
+        "attribute": false,
+        "wrapped": false
+      }
+    },
+    "PagedResources«FishingTripResource»": {
+      "type": "object",
+      "properties": {
+        "content": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FishingTripResource"
+          }
+        },
+        "links": {
+          "type": "array",
+          "xml": {
+            "name": "link",
+            "namespace": "http://www.w3.org/2005/Atom",
+            "attribute": false,
+            "wrapped": false
+          },
+          "items": {
+            "$ref": "#/definitions/Link"
+          }
+        },
+        "page": {
+          "$ref": "#/definitions/PageMetadata"
+        }
+      },
+      "title": "PagedResources«FishingTripResource»",
+      "xml": {
+        "name": "pagedEntities",
+        "attribute": false,
+        "wrapped": false
+      }
+    },
+    "ResourceSupport": {
+      "type": "object",
+      "properties": {
+        "links": {
+          "type": "array",
+          "xml": {
+            "name": "link",
+            "namespace": "http://www.w3.org/2005/Atom",
+            "attribute": false,
+            "wrapped": false
+          },
+          "items": {
+            "$ref": "#/definitions/Link"
+          }
+        }
+      },
+      "title": "ResourceSupport"
+    },
+    "VesselIds": {
+      "type": "object",
+      "properties": {
+        "cfr": {
+          "type": "string"
+        },
+        "extmark": {
+          "type": "string"
+        },
+        "internal": {
+          "type": "string"
+        },
+        "ircs": {
+          "type": "string"
+        },
+        "mmsi": {
+          "type": "string"
+        },
+        "regnbr": {
+          "type": "string"
+        },
+        "uvi": {
+          "type": "string"
+        }
+      },
+      "title": "VesselIds"
+    },
+    "VesselTransportMeans": {
+      "type": "object",
+      "properties": {
+        "ids": {
+          "$ref": "#/definitions/VesselIds"
+        },
+        "name": {
+          "type": "string"
+        },
+        "registrationVesselCountry": {
+          "type": "string"
+        },
+        "specifiedContactParties": {
+          "$ref": "#/definitions/ContactParties"
+        }
+      },
+      "title": "VesselTransportMeans"
+    },
+    "View": {
+      "type": "object",
+      "properties": {
+        "contentType": {
+          "type": "string"
+        }
+      },
+      "title": "View"
+    }
+  }
+}

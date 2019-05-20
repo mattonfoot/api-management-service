@@ -1,1 +1,1047 @@
-{"swagger":"2.0","info":{"description":"VesselService","version":"1.0.0","title":"SDS Vessel Service","contact":{},"license":{"url":"http://unlicense.org"}},"host":"sds-vessel-service.sds.svc.cluster.local","basePath":"/","tags":[{"name":"Vessel Entity","description":"$ Proxy 129"},{"name":"hal-browser","description":"Hal Browser"},{"name":"profile-controller","description":"Profile Controller"},{"name":"vessel-controller","description":"Vessel Controller"}],"paths":{"/v1/":{"get":{"tags":["hal-browser"],"summary":"index","operationId":"indexUsingGET","produces":["text/html"],"responses":{"200":{"description":"OK","schema":{"$ref":"#/definitions/View"}}},"deprecated":false}},"/v1/browser":{"get":{"tags":["hal-browser"],"summary":"browser","operationId":"browserUsingGET","produces":["*/*"],"responses":{"200":{"description":"OK","schema":{"$ref":"#/definitions/View"}}},"deprecated":false}},"/v1/profile":{"get":{"tags":["profile-controller"],"summary":"listAllFormsOfMetadata","operationId":"listAllFormsOfMetadataUsingGET","produces":["*/*"],"responses":{"200":{"description":"OK","schema":{"$ref":"#/definitions/ResourceSupport"}}},"deprecated":false},"options":{"tags":["profile-controller"],"summary":"profileOptions","operationId":"profileOptionsUsingOPTIONS","consumes":["application/json"],"produces":["*/*"],"responses":{"200":{"description":"OK","schema":{"type":"object"}}},"deprecated":false}},"/v1/queries/findVesselsByIds":{"post":{"tags":["vessel-controller"],"summary":"Bulk Retrieve Vessels Information by id","operationId":"bulkRetrieveVesselsUsingPOST","consumes":["application/json"],"produces":["*/*","application/json"],"parameters":[{"in":"body","name":"ids","description":"ids","required":true,"schema":{"type":"array","items":{"type":"string","format":"uuid"}}},{"name":"page","in":"query","required":false,"type":"integer","format":"int32"},{"name":"size","in":"query","required":false,"type":"integer","format":"int32"},{"name":"sort","in":"query","required":false,"type":"string"}],"responses":{"200":{"description":"Successful","schema":{"type":"string"}},"400":{"description":"Invalid parameters","schema":{"type":"string"}},"403":{"description":"User not authorised to perform operation","schema":{"type":"string"}},"404":{"description":"Resource could not be found","schema":{"type":"string"}},"500":{"description":"Error occurred while performing operation","schema":{"type":"string"}}},"deprecated":false}},"/v1/vessels":{"get":{"tags":["vessel-controller"],"summary":"get all vessels with optional filter on CFR.","operationId":"getAllVesselsUsingGET","produces":["*/*","application/json"],"parameters":[{"name":"cfr","in":"query","description":"The vessel CFR","required":false,"type":"string","allowEmptyValue":false},{"name":"page","in":"query","required":false,"type":"integer","format":"int32"},{"name":"size","in":"query","required":false,"type":"integer","format":"int32"},{"name":"sort","in":"query","required":false,"type":"string"}],"responses":{"200":{"description":"Successful","schema":{"type":"string"}}},"deprecated":false}},"/v1/vessels/{id}":{"get":{"tags":["Vessel Entity"],"summary":"findByIdVessel","operationId":"findByIdVesselUsingGET","produces":["*/*"],"parameters":[{"name":"id","in":"path","description":"id","required":true,"type":"string","format":"uuid"}],"responses":{"200":{"description":"OK","schema":{"$ref":"#/definitions/Resource«Vessel»"}}},"deprecated":false}}},"definitions":{"Address":{"type":"object","properties":{"city":{"type":"string"},"country":{"type":"string"},"poBox":{"type":"string"},"postalArea":{"type":"string"},"street":{"type":"string"}},"title":"Address"},"Communication":{"type":"object","properties":{"emails":{"type":"array","items":{"type":"string"}},"universal":{"type":"array","items":{"$ref":"#/definitions/Universal"}}},"title":"Communication"},"ConstructionEvent":{"type":"object","properties":{"constructionLocation":{"$ref":"#/definitions/ConstructionLocation"},"occurence":{"type":"string"}},"title":"ConstructionEvent"},"ConstructionLocation":{"type":"object","properties":{"address":{"$ref":"#/definitions/Address"},"country":{"type":"string"},"type":{"type":"string"}},"title":"ConstructionLocation"},"EmbeddedCollection«Vessel»":{"type":"object","required":["vessels"],"properties":{"vessels":{"type":"array","description":"Resource collection","items":{"$ref":"#/definitions/Vessel"}}},"title":"EmbeddedCollection«Vessel»","xml":{"name":"content","wrapped":true},"description":"Embedded collection of Vessel"},"FishingGear":{"type":"object","properties":{"roleCode":{"type":"string"},"typeCode":{"type":"string"}},"title":"FishingGear"},"Ids":{"type":"object","properties":{"cfr":{"type":"string"},"extmark":{"type":"string"},"ircs":{"type":"string"},"mmsi":{"type":"string"},"regnbr":{"type":"string"},"uvi":{"type":"string"}},"title":"Ids"},"Link":{"type":"object","properties":{"deprecation":{"type":"string","xml":{"name":"deprecation","attribute":true,"wrapped":false}},"href":{"type":"string","xml":{"name":"href","attribute":true,"wrapped":false}},"hreflang":{"type":"string","xml":{"name":"hreflang","attribute":true,"wrapped":false}},"media":{"type":"string","xml":{"name":"media","attribute":true,"wrapped":false}},"rel":{"type":"string","xml":{"name":"rel","attribute":true,"wrapped":false}},"templated":{"type":"boolean"},"title":{"type":"string","xml":{"name":"title","attribute":true,"wrapped":false}},"type":{"type":"string","xml":{"name":"type","attribute":true,"wrapped":false}}},"title":"Link"},"MaxSize":{"type":"object","properties":{"unit":{"type":"string"},"value":{"type":"number","format":"double"}},"title":"MaxSize"},"MemberQuantity":{"type":"object","properties":{"unit":{"type":"string"},"value":{"type":"number","format":"double"}},"title":"MemberQuantity"},"MinSize":{"type":"object","properties":{"unit":{"type":"string"},"value":{"type":"number","format":"double"}},"title":"MinSize"},"PageMetadata":{"type":"object","properties":{"number":{"type":"integer","format":"int64","xml":{"name":"number","attribute":true,"wrapped":false}},"size":{"type":"integer","format":"int64","xml":{"name":"size","attribute":true,"wrapped":false}},"totalElements":{"type":"integer","format":"int64","xml":{"name":"totalElements","attribute":true,"wrapped":false}},"totalPages":{"type":"integer","format":"int64","xml":{"name":"totalPages","attribute":true,"wrapped":false}}},"title":"PageMetadata"},"PagedResources«Resource«Vessel»»":{"type":"object","properties":{"content":{"type":"array","items":{"$ref":"#/definitions/Resource«Vessel»"}},"links":{"type":"array","xml":{"name":"link","namespace":"http://www.w3.org/2005/Atom","attribute":false,"wrapped":false},"items":{"$ref":"#/definitions/Link"}},"page":{"$ref":"#/definitions/PageMetadata"}},"title":"PagedResources«Resource«Vessel»»"},"RegistrationEvent":{"type":"object","properties":{"registrationLocation":{"$ref":"#/definitions/RegistrationLocation"}},"title":"RegistrationEvent"},"RegistrationLocation":{"type":"object","properties":{"country":{"type":"string"},"id":{"type":"string"},"name":{"type":"string"},"type":{"type":"string"}},"title":"RegistrationLocation"},"ResourceSupport":{"type":"object","properties":{"links":{"type":"array","xml":{"name":"link","namespace":"http://www.w3.org/2005/Atom","attribute":false,"wrapped":false},"items":{"$ref":"#/definitions/Link"}}},"title":"ResourceSupport"},"Resources«Vessel»":{"type":"object","required":["_embedded","_links"],"properties":{"_embedded":{"$ref":"#/definitions/EmbeddedCollection«Vessel»"},"_links":{"type":"object","description":"Link collection","additionalProperties":{"$ref":"#/definitions/Link"}}},"title":"Resources«Vessel»","xml":{"name":"entities","attribute":false,"wrapped":false},"description":"Resources of Vessel"},"Resource«Vessel»":{"type":"object","properties":{"constructionEvent":{"$ref":"#/definitions/ConstructionEvent"},"fishingGears":{"type":"array","items":{"$ref":"#/definitions/FishingGear"}},"id":{"type":"string","format":"uuid"},"ids":{"$ref":"#/definitions/Ids"},"links":{"type":"array","xml":{"name":"link","namespace":"http://www.w3.org/2005/Atom","attribute":false,"wrapped":false},"items":{"$ref":"#/definitions/Link"}},"name":{"type":"string"},"registrationCountry":{"type":"string"},"registrationEvents":{"type":"array","items":{"$ref":"#/definitions/RegistrationEvent"}},"specifiedContactParties":{"type":"array","items":{"$ref":"#/definitions/SpecifiedContactParty"}},"speed":{"type":"string"},"speedUnit":{"type":"string"},"trawlingSpeed":{"type":"string"},"trawlingSpeedUnit":{"type":"string"},"typeCode":{"type":"string"},"vesselAdminCharacteristics":{"type":"array","items":{"$ref":"#/definitions/VesselAdminCharacteristic"}},"vesselCrew":{"$ref":"#/definitions/VesselCrew"},"vesselDimensions":{"type":"array","items":{"$ref":"#/definitions/VesselDimension"}},"vesselEngines":{"type":"array","items":{"$ref":"#/definitions/VesselEngine"}},"vesselEquipmentCharacteristics":{"type":"array","items":{"$ref":"#/definitions/VesselEquipmentCharacteristic"}},"vesselPictures":{"type":"array","items":{"$ref":"#/definitions/VesselPicture"}},"vesselStorageCharacteristics":{"type":"array","items":{"$ref":"#/definitions/VesselStorageCharacteristic"}},"vesselTechnicalCharacteristics":{"type":"array","items":{"$ref":"#/definitions/VesselTechnicalCharacteristic"}}},"title":"Resource«Vessel»"},"SpecifiedContactParty":{"type":"object","properties":{"address":{"$ref":"#/definitions/Address"},"communication":{"$ref":"#/definitions/Communication"},"companyId":{"type":"string"},"contactPerson":{"type":"string"},"name":{"type":"string"},"nationality":{"type":"string"},"role":{"type":"string"}},"title":"SpecifiedContactParty"},"Universal":{"type":"object","properties":{"channelCode":{"type":"string"},"number":{"type":"string"}},"title":"Universal"},"Vessel":{"type":"object","properties":{"constructionEvent":{"$ref":"#/definitions/ConstructionEvent"},"fishingGears":{"type":"array","items":{"$ref":"#/definitions/FishingGear"}},"id":{"type":"string","format":"uuid"},"ids":{"$ref":"#/definitions/Ids"},"name":{"type":"string"},"registrationCountry":{"type":"string"},"registrationEvents":{"type":"array","items":{"$ref":"#/definitions/RegistrationEvent"}},"specifiedContactParties":{"type":"array","items":{"$ref":"#/definitions/SpecifiedContactParty"}},"speed":{"type":"string"},"speedUnit":{"type":"string"},"trawlingSpeed":{"type":"string"},"trawlingSpeedUnit":{"type":"string"},"typeCode":{"type":"string"},"vesselAdminCharacteristics":{"type":"array","items":{"$ref":"#/definitions/VesselAdminCharacteristic"}},"vesselCrew":{"$ref":"#/definitions/VesselCrew"},"vesselDimensions":{"type":"array","items":{"$ref":"#/definitions/VesselDimension"}},"vesselEngines":{"type":"array","items":{"$ref":"#/definitions/VesselEngine"}},"vesselEquipmentCharacteristics":{"type":"array","items":{"$ref":"#/definitions/VesselEquipmentCharacteristic"}},"vesselPictures":{"type":"array","items":{"$ref":"#/definitions/VesselPicture"}},"vesselStorageCharacteristics":{"type":"array","items":{"$ref":"#/definitions/VesselStorageCharacteristic"}},"vesselTechnicalCharacteristics":{"type":"array","items":{"$ref":"#/definitions/VesselTechnicalCharacteristic"}}},"title":"Vessel"},"VesselAdminCharacteristic":{"type":"object","properties":{"typeCode":{"type":"string"},"valueCode":{"type":"string"},"valueDateTime":{"type":"string"},"valueText":{"type":"string"}},"title":"VesselAdminCharacteristic"},"VesselCrew":{"type":"object","properties":{"maxSize":{"$ref":"#/definitions/MaxSize"},"memberQuantity":{"$ref":"#/definitions/MemberQuantity"},"minSize":{"$ref":"#/definitions/MinSize"}},"title":"VesselCrew"},"VesselDimension":{"type":"object","properties":{"typeCode":{"type":"string"},"valueMeasure":{"type":"string"},"valueMeasureUnit":{"type":"string"}},"title":"VesselDimension"},"VesselEngine":{"type":"object","properties":{"manufacturer":{"type":"string"},"model":{"type":"string"},"powerMeasure":{"type":"string"},"powerMeasureUnit":{"type":"string"},"propulsionTypeCode":{"type":"string"},"roleCode":{"type":"string"}},"title":"VesselEngine"},"VesselEquipmentCharacteristic":{"type":"object","properties":{"typeCode":{"type":"string"},"value":{"type":"string"}},"title":"VesselEquipmentCharacteristic"},"VesselPicture":{"type":"object","properties":{"description":{"type":"string"},"image":{"type":"string"},"taken":{"type":"string"},"typeCode":{"type":"string"}},"title":"VesselPicture"},"VesselStorageCharacteristic":{"type":"object","properties":{"capacity":{"type":"string"},"capacityUnit":{"type":"string"},"temperature":{"type":"string"},"typeCode":{"type":"string"}},"title":"VesselStorageCharacteristic"},"VesselTechnicalCharacteristic":{"type":"object","properties":{"typeCode":{"type":"string"},"value":{"type":"string"}},"title":"VesselTechnicalCharacteristic"},"View":{"type":"object","properties":{"contentType":{"type":"string"}},"title":"View"}}}
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "VesselService",
+    "version": "1.0.0",
+    "title": "SDS Vessel Service",
+    "contact": {},
+    "license": {
+      "url": "http://unlicense.org"
+    }
+  },
+  "host": "sds-vessel-service.sds.svc.cluster.local",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "Vessel Entity",
+      "description": "$ Proxy 129"
+    },
+    {
+      "name": "hal-browser",
+      "description": "Hal Browser"
+    },
+    {
+      "name": "profile-controller",
+      "description": "Profile Controller"
+    },
+    {
+      "name": "vessel-controller",
+      "description": "Vessel Controller"
+    }
+  ],
+  "paths": {
+    "/v1/": {
+      "get": {
+        "tags": [
+          "hal-browser"
+        ],
+        "summary": "index",
+        "operationId": "indexUsingGET",
+        "produces": [
+          "text/html"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/View"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/browser": {
+      "get": {
+        "tags": [
+          "hal-browser"
+        ],
+        "summary": "browser",
+        "operationId": "browserUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/View"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/profile": {
+      "get": {
+        "tags": [
+          "profile-controller"
+        ],
+        "summary": "listAllFormsOfMetadata",
+        "operationId": "listAllFormsOfMetadataUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResourceSupport"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "options": {
+        "tags": [
+          "profile-controller"
+        ],
+        "summary": "profileOptions",
+        "operationId": "profileOptionsUsingOPTIONS",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/queries/findVesselsByIds": {
+      "post": {
+        "tags": [
+          "vessel-controller"
+        ],
+        "summary": "Bulk Retrieve Vessels Information by id",
+        "operationId": "bulkRetrieveVesselsUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "ids",
+            "description": "ids",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uuid"
+              }
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "403": {
+            "description": "User not authorised to perform operation",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "404": {
+            "description": "Resource could not be found",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "500": {
+            "description": "Error occurred while performing operation",
+            "schema": {
+              "type": "string"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/vessels": {
+      "get": {
+        "tags": [
+          "vessel-controller"
+        ],
+        "summary": "get all vessels with optional filter on CFR.",
+        "operationId": "getAllVesselsUsingGET",
+        "produces": [
+          "*/*",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "cfr",
+            "in": "query",
+            "description": "The vessel CFR",
+            "required": false,
+            "type": "string",
+            "allowEmptyValue": false
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "schema": {
+              "type": "string"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/vessels/{id}": {
+      "get": {
+        "tags": [
+          "Vessel Entity"
+        ],
+        "summary": "findByIdVessel",
+        "operationId": "findByIdVesselUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Resource«Vessel»"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    }
+  },
+  "definitions": {
+    "Address": {
+      "type": "object",
+      "properties": {
+        "city": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        },
+        "poBox": {
+          "type": "string"
+        },
+        "postalArea": {
+          "type": "string"
+        },
+        "street": {
+          "type": "string"
+        }
+      },
+      "title": "Address"
+    },
+    "Communication": {
+      "type": "object",
+      "properties": {
+        "emails": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "universal": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Universal"
+          }
+        }
+      },
+      "title": "Communication"
+    },
+    "ConstructionEvent": {
+      "type": "object",
+      "properties": {
+        "constructionLocation": {
+          "$ref": "#/definitions/ConstructionLocation"
+        },
+        "occurence": {
+          "type": "string"
+        }
+      },
+      "title": "ConstructionEvent"
+    },
+    "ConstructionLocation": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "$ref": "#/definitions/Address"
+        },
+        "country": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        }
+      },
+      "title": "ConstructionLocation"
+    },
+    "EmbeddedCollection«Vessel»": {
+      "type": "object",
+      "required": [
+        "vessels"
+      ],
+      "properties": {
+        "vessels": {
+          "type": "array",
+          "description": "Resource collection",
+          "items": {
+            "$ref": "#/definitions/Vessel"
+          }
+        }
+      },
+      "title": "EmbeddedCollection«Vessel»",
+      "xml": {
+        "name": "content",
+        "wrapped": true
+      },
+      "description": "Embedded collection of Vessel"
+    },
+    "FishingGear": {
+      "type": "object",
+      "properties": {
+        "roleCode": {
+          "type": "string"
+        },
+        "typeCode": {
+          "type": "string"
+        }
+      },
+      "title": "FishingGear"
+    },
+    "Ids": {
+      "type": "object",
+      "properties": {
+        "cfr": {
+          "type": "string"
+        },
+        "extmark": {
+          "type": "string"
+        },
+        "ircs": {
+          "type": "string"
+        },
+        "mmsi": {
+          "type": "string"
+        },
+        "regnbr": {
+          "type": "string"
+        },
+        "uvi": {
+          "type": "string"
+        }
+      },
+      "title": "Ids"
+    },
+    "Link": {
+      "type": "object",
+      "properties": {
+        "deprecation": {
+          "type": "string",
+          "xml": {
+            "name": "deprecation",
+            "attribute": true,
+            "wrapped": false
+          }
+        },
+        "href": {
+          "type": "string",
+          "xml": {
+            "name": "href",
+            "attribute": true,
+            "wrapped": false
+          }
+        },
+        "hreflang": {
+          "type": "string",
+          "xml": {
+            "name": "hreflang",
+            "attribute": true,
+            "wrapped": false
+          }
+        },
+        "media": {
+          "type": "string",
+          "xml": {
+            "name": "media",
+            "attribute": true,
+            "wrapped": false
+          }
+        },
+        "rel": {
+          "type": "string",
+          "xml": {
+            "name": "rel",
+            "attribute": true,
+            "wrapped": false
+          }
+        },
+        "templated": {
+          "type": "boolean"
+        },
+        "title": {
+          "type": "string",
+          "xml": {
+            "name": "title",
+            "attribute": true,
+            "wrapped": false
+          }
+        },
+        "type": {
+          "type": "string",
+          "xml": {
+            "name": "type",
+            "attribute": true,
+            "wrapped": false
+          }
+        }
+      },
+      "title": "Link"
+    },
+    "MaxSize": {
+      "type": "object",
+      "properties": {
+        "unit": {
+          "type": "string"
+        },
+        "value": {
+          "type": "number",
+          "format": "double"
+        }
+      },
+      "title": "MaxSize"
+    },
+    "MemberQuantity": {
+      "type": "object",
+      "properties": {
+        "unit": {
+          "type": "string"
+        },
+        "value": {
+          "type": "number",
+          "format": "double"
+        }
+      },
+      "title": "MemberQuantity"
+    },
+    "MinSize": {
+      "type": "object",
+      "properties": {
+        "unit": {
+          "type": "string"
+        },
+        "value": {
+          "type": "number",
+          "format": "double"
+        }
+      },
+      "title": "MinSize"
+    },
+    "PageMetadata": {
+      "type": "object",
+      "properties": {
+        "number": {
+          "type": "integer",
+          "format": "int64",
+          "xml": {
+            "name": "number",
+            "attribute": true,
+            "wrapped": false
+          }
+        },
+        "size": {
+          "type": "integer",
+          "format": "int64",
+          "xml": {
+            "name": "size",
+            "attribute": true,
+            "wrapped": false
+          }
+        },
+        "totalElements": {
+          "type": "integer",
+          "format": "int64",
+          "xml": {
+            "name": "totalElements",
+            "attribute": true,
+            "wrapped": false
+          }
+        },
+        "totalPages": {
+          "type": "integer",
+          "format": "int64",
+          "xml": {
+            "name": "totalPages",
+            "attribute": true,
+            "wrapped": false
+          }
+        }
+      },
+      "title": "PageMetadata"
+    },
+    "PagedResources«Resource«Vessel»»": {
+      "type": "object",
+      "properties": {
+        "content": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Resource«Vessel»"
+          }
+        },
+        "links": {
+          "type": "array",
+          "xml": {
+            "name": "link",
+            "namespace": "http://www.w3.org/2005/Atom",
+            "attribute": false,
+            "wrapped": false
+          },
+          "items": {
+            "$ref": "#/definitions/Link"
+          }
+        },
+        "page": {
+          "$ref": "#/definitions/PageMetadata"
+        }
+      },
+      "title": "PagedResources«Resource«Vessel»»"
+    },
+    "RegistrationEvent": {
+      "type": "object",
+      "properties": {
+        "registrationLocation": {
+          "$ref": "#/definitions/RegistrationLocation"
+        }
+      },
+      "title": "RegistrationEvent"
+    },
+    "RegistrationLocation": {
+      "type": "object",
+      "properties": {
+        "country": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        }
+      },
+      "title": "RegistrationLocation"
+    },
+    "ResourceSupport": {
+      "type": "object",
+      "properties": {
+        "links": {
+          "type": "array",
+          "xml": {
+            "name": "link",
+            "namespace": "http://www.w3.org/2005/Atom",
+            "attribute": false,
+            "wrapped": false
+          },
+          "items": {
+            "$ref": "#/definitions/Link"
+          }
+        }
+      },
+      "title": "ResourceSupport"
+    },
+    "Resources«Vessel»": {
+      "type": "object",
+      "required": [
+        "_embedded",
+        "_links"
+      ],
+      "properties": {
+        "_embedded": {
+          "$ref": "#/definitions/EmbeddedCollection«Vessel»"
+        },
+        "_links": {
+          "type": "object",
+          "description": "Link collection",
+          "additionalProperties": {
+            "$ref": "#/definitions/Link"
+          }
+        }
+      },
+      "title": "Resources«Vessel»",
+      "xml": {
+        "name": "entities",
+        "attribute": false,
+        "wrapped": false
+      },
+      "description": "Resources of Vessel"
+    },
+    "Resource«Vessel»": {
+      "type": "object",
+      "properties": {
+        "constructionEvent": {
+          "$ref": "#/definitions/ConstructionEvent"
+        },
+        "fishingGears": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FishingGear"
+          }
+        },
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "ids": {
+          "$ref": "#/definitions/Ids"
+        },
+        "links": {
+          "type": "array",
+          "xml": {
+            "name": "link",
+            "namespace": "http://www.w3.org/2005/Atom",
+            "attribute": false,
+            "wrapped": false
+          },
+          "items": {
+            "$ref": "#/definitions/Link"
+          }
+        },
+        "name": {
+          "type": "string"
+        },
+        "registrationCountry": {
+          "type": "string"
+        },
+        "registrationEvents": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/RegistrationEvent"
+          }
+        },
+        "specifiedContactParties": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SpecifiedContactParty"
+          }
+        },
+        "speed": {
+          "type": "string"
+        },
+        "speedUnit": {
+          "type": "string"
+        },
+        "trawlingSpeed": {
+          "type": "string"
+        },
+        "trawlingSpeedUnit": {
+          "type": "string"
+        },
+        "typeCode": {
+          "type": "string"
+        },
+        "vesselAdminCharacteristics": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/VesselAdminCharacteristic"
+          }
+        },
+        "vesselCrew": {
+          "$ref": "#/definitions/VesselCrew"
+        },
+        "vesselDimensions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/VesselDimension"
+          }
+        },
+        "vesselEngines": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/VesselEngine"
+          }
+        },
+        "vesselEquipmentCharacteristics": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/VesselEquipmentCharacteristic"
+          }
+        },
+        "vesselPictures": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/VesselPicture"
+          }
+        },
+        "vesselStorageCharacteristics": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/VesselStorageCharacteristic"
+          }
+        },
+        "vesselTechnicalCharacteristics": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/VesselTechnicalCharacteristic"
+          }
+        }
+      },
+      "title": "Resource«Vessel»"
+    },
+    "SpecifiedContactParty": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "$ref": "#/definitions/Address"
+        },
+        "communication": {
+          "$ref": "#/definitions/Communication"
+        },
+        "companyId": {
+          "type": "string"
+        },
+        "contactPerson": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "nationality": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string"
+        }
+      },
+      "title": "SpecifiedContactParty"
+    },
+    "Universal": {
+      "type": "object",
+      "properties": {
+        "channelCode": {
+          "type": "string"
+        },
+        "number": {
+          "type": "string"
+        }
+      },
+      "title": "Universal"
+    },
+    "Vessel": {
+      "type": "object",
+      "properties": {
+        "constructionEvent": {
+          "$ref": "#/definitions/ConstructionEvent"
+        },
+        "fishingGears": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FishingGear"
+          }
+        },
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "ids": {
+          "$ref": "#/definitions/Ids"
+        },
+        "name": {
+          "type": "string"
+        },
+        "registrationCountry": {
+          "type": "string"
+        },
+        "registrationEvents": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/RegistrationEvent"
+          }
+        },
+        "specifiedContactParties": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SpecifiedContactParty"
+          }
+        },
+        "speed": {
+          "type": "string"
+        },
+        "speedUnit": {
+          "type": "string"
+        },
+        "trawlingSpeed": {
+          "type": "string"
+        },
+        "trawlingSpeedUnit": {
+          "type": "string"
+        },
+        "typeCode": {
+          "type": "string"
+        },
+        "vesselAdminCharacteristics": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/VesselAdminCharacteristic"
+          }
+        },
+        "vesselCrew": {
+          "$ref": "#/definitions/VesselCrew"
+        },
+        "vesselDimensions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/VesselDimension"
+          }
+        },
+        "vesselEngines": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/VesselEngine"
+          }
+        },
+        "vesselEquipmentCharacteristics": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/VesselEquipmentCharacteristic"
+          }
+        },
+        "vesselPictures": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/VesselPicture"
+          }
+        },
+        "vesselStorageCharacteristics": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/VesselStorageCharacteristic"
+          }
+        },
+        "vesselTechnicalCharacteristics": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/VesselTechnicalCharacteristic"
+          }
+        }
+      },
+      "title": "Vessel"
+    },
+    "VesselAdminCharacteristic": {
+      "type": "object",
+      "properties": {
+        "typeCode": {
+          "type": "string"
+        },
+        "valueCode": {
+          "type": "string"
+        },
+        "valueDateTime": {
+          "type": "string"
+        },
+        "valueText": {
+          "type": "string"
+        }
+      },
+      "title": "VesselAdminCharacteristic"
+    },
+    "VesselCrew": {
+      "type": "object",
+      "properties": {
+        "maxSize": {
+          "$ref": "#/definitions/MaxSize"
+        },
+        "memberQuantity": {
+          "$ref": "#/definitions/MemberQuantity"
+        },
+        "minSize": {
+          "$ref": "#/definitions/MinSize"
+        }
+      },
+      "title": "VesselCrew"
+    },
+    "VesselDimension": {
+      "type": "object",
+      "properties": {
+        "typeCode": {
+          "type": "string"
+        },
+        "valueMeasure": {
+          "type": "string"
+        },
+        "valueMeasureUnit": {
+          "type": "string"
+        }
+      },
+      "title": "VesselDimension"
+    },
+    "VesselEngine": {
+      "type": "object",
+      "properties": {
+        "manufacturer": {
+          "type": "string"
+        },
+        "model": {
+          "type": "string"
+        },
+        "powerMeasure": {
+          "type": "string"
+        },
+        "powerMeasureUnit": {
+          "type": "string"
+        },
+        "propulsionTypeCode": {
+          "type": "string"
+        },
+        "roleCode": {
+          "type": "string"
+        }
+      },
+      "title": "VesselEngine"
+    },
+    "VesselEquipmentCharacteristic": {
+      "type": "object",
+      "properties": {
+        "typeCode": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "title": "VesselEquipmentCharacteristic"
+    },
+    "VesselPicture": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "image": {
+          "type": "string"
+        },
+        "taken": {
+          "type": "string"
+        },
+        "typeCode": {
+          "type": "string"
+        }
+      },
+      "title": "VesselPicture"
+    },
+    "VesselStorageCharacteristic": {
+      "type": "object",
+      "properties": {
+        "capacity": {
+          "type": "string"
+        },
+        "capacityUnit": {
+          "type": "string"
+        },
+        "temperature": {
+          "type": "string"
+        },
+        "typeCode": {
+          "type": "string"
+        }
+      },
+      "title": "VesselStorageCharacteristic"
+    },
+    "VesselTechnicalCharacteristic": {
+      "type": "object",
+      "properties": {
+        "typeCode": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "title": "VesselTechnicalCharacteristic"
+    },
+    "View": {
+      "type": "object",
+      "properties": {
+        "contentType": {
+          "type": "string"
+        }
+      },
+      "title": "View"
+    }
+  }
+}

@@ -1,1 +1,894 @@
-{"swagger":"2.0","info":{"description":"Gear Service","version":"1.0.0","title":"SDS Gear Service","contact":{},"license":{"url":"http://unlicense.org"}},"host":"sds-gear-service.sds.svc.cluster.local","basePath":"/","tags":[{"name":"gear-controller","description":"Gear Controller"},{"name":"hal-browser","description":"Hal Browser"},{"name":"profile-controller","description":"Profile Controller"}],"paths":{"/v1/":{"get":{"tags":["hal-browser"],"summary":"index","operationId":"indexUsingGET","produces":["text/html"],"responses":{"200":{"description":"OK","schema":{"$ref":"#/definitions/View"}}},"deprecated":false}},"/v1/all":{"get":{"tags":["gear-controller"],"summary":"Retrieves all Gear types and information","operationId":"retrieveAllGearInformationUsingGET","produces":["*/*","application/json"],"parameters":[{"name":"page","in":"query","required":false,"type":"integer","format":"int32"},{"name":"size","in":"query","required":false,"type":"integer","format":"int32"},{"name":"sort","in":"query","required":false,"type":"string"}],"responses":{"200":{"description":"Successful","schema":{"type":"string"}},"400":{"description":"Invalid parameters","schema":{"type":"string"}},"403":{"description":"User not authorised to perform operation","schema":{"type":"string"}},"404":{"description":"Resource could not be found","schema":{"type":"string"}},"500":{"description":"Error occurred while performing operation","schema":{"type":"string"}}},"deprecated":false}},"/v1/browser":{"get":{"tags":["hal-browser"],"summary":"browser","operationId":"browserUsingGET","produces":["*/*"],"responses":{"200":{"description":"OK","schema":{"$ref":"#/definitions/View"}}},"deprecated":false}},"/v1/categories":{"get":{"tags":["gear-controller"],"summary":"Retrieves all Gear Categories","operationId":"retrieveAllCategoriesUsingGET","produces":["*/*","application/json"],"responses":{"200":{"description":"Successful","schema":{"type":"string"}},"400":{"description":"Invalid parameters","schema":{"type":"string"}},"403":{"description":"User not authorised to perform operation","schema":{"type":"string"}},"404":{"description":"Resource could not be found","schema":{"type":"string"}},"500":{"description":"Error occurred while performing operation","schema":{"type":"string"}}},"deprecated":false}},"/v1/characteristics":{"get":{"tags":["gear-controller"],"summary":"Retrieves all Gear Characteristics","operationId":"retrieveAllCharacteristicsUsingGET","produces":["*/*","application/json"],"responses":{"200":{"description":"Successful","schema":{"type":"string"}},"400":{"description":"Invalid parameters","schema":{"type":"string"}},"403":{"description":"User not authorised to perform operation","schema":{"type":"string"}},"404":{"description":"Resource could not be found","schema":{"type":"string"}},"500":{"description":"Error occurred while performing operation","schema":{"type":"string"}}},"deprecated":false}},"/v1/gears":{"get":{"tags":["gear-controller"],"summary":"Unified Search to Retrieve gears by name, category","operationId":"searchUsingGET","produces":["*/*","application/json"],"parameters":[{"name":"category","in":"query","description":"(Optional) - The category name","required":false,"type":"string","allowEmptyValue":false},{"name":"query","in":"query","description":"(Optional) - The search term","required":false,"type":"string","allowEmptyValue":false}],"responses":{"200":{"description":"Successful","schema":{"type":"string"}},"400":{"description":"Invalid parameters","schema":{"type":"string"}},"403":{"description":"User not authorised to perform operation","schema":{"type":"string"}},"404":{"description":"Resource could not be found","schema":{"type":"string"}},"500":{"description":"Error occurred while performing operation","schema":{"type":"string"}}},"deprecated":false}},"/v1/gears/search":{"post":{"tags":["gear-controller"],"summary":"Bulk Retrieve Gear Information by id","operationId":"bulkRetrieveGearsUsingPOST","consumes":["application/json"],"produces":["*/*","application/json"],"parameters":[{"in":"body","name":"ids","description":"ids","required":true,"schema":{"type":"array","items":{"type":"string","format":"uuid"}}}],"responses":{"200":{"description":"Successful","schema":{"type":"string"}},"400":{"description":"Invalid parameters","schema":{"type":"string"}},"403":{"description":"User not authorised to perform operation","schema":{"type":"string"}},"404":{"description":"Resource could not be found","schema":{"type":"string"}},"500":{"description":"Error occurred while performing operation","schema":{"type":"string"}}},"deprecated":false}},"/v1/gears/{id}":{"get":{"tags":["gear-controller"],"summary":"Retrieves a Gear by Id","operationId":"searchByIdUsingGET","produces":["*/*","application/json"],"parameters":[{"name":"id","in":"path","description":"id","required":true,"type":"string","format":"uuid"}],"responses":{"200":{"description":"Successful","schema":{"type":"string"}},"400":{"description":"Invalid parameters","schema":{"type":"string"}},"403":{"description":"User not authorised to perform operation","schema":{"type":"string"}},"404":{"description":"Resource could not be found","schema":{"type":"string"}},"500":{"description":"Error occurred while performing operation","schema":{"type":"string"}}},"deprecated":false}},"/v1/profile":{"get":{"tags":["profile-controller"],"summary":"listAllFormsOfMetadata","operationId":"listAllFormsOfMetadataUsingGET","produces":["*/*"],"responses":{"200":{"description":"OK","schema":{"$ref":"#/definitions/ResourceSupport"}}},"deprecated":false},"options":{"tags":["profile-controller"],"summary":"profileOptions","operationId":"profileOptionsUsingOPTIONS","consumes":["application/json"],"produces":["*/*"],"responses":{"200":{"description":"OK","schema":{"type":"object"}}},"deprecated":false}}},"definitions":{"ApplicableCharacteristicsInfo":{"type":"object","properties":{"characteristicId":{"type":"string","format":"uuid"},"code":{"type":"string"},"fixed":{"type":"boolean"},"name":{"type":"string"}},"title":"ApplicableCharacteristicsInfo"},"Category":{"type":"object","properties":{"id":{"type":"string","format":"uuid"},"name":{"type":"string"}},"title":"Category"},"Characteristic":{"type":"object","properties":{"code":{"type":"string"},"id":{"type":"string","format":"uuid"},"name":{"type":"string"}},"title":"Characteristic"},"EmbeddedCollection«Category»":{"type":"object","required":["categories"],"properties":{"categories":{"type":"array","description":"Resource collection","items":{"$ref":"#/definitions/Category"}}},"title":"EmbeddedCollection«Category»","xml":{"name":"content","wrapped":true},"description":"Embedded collection of Category"},"EmbeddedCollection«Characteristic»":{"type":"object","required":["characteristics"],"properties":{"characteristics":{"type":"array","description":"Resource collection","items":{"$ref":"#/definitions/Characteristic"}}},"title":"EmbeddedCollection«Characteristic»","xml":{"name":"content","wrapped":true},"description":"Embedded collection of Characteristic"},"EmbeddedCollection«SimpleGear»":{"type":"object","required":["simpleGears"],"properties":{"simpleGears":{"type":"array","description":"Resource collection","items":{"$ref":"#/definitions/SimpleGear"}}},"title":"EmbeddedCollection«SimpleGear»","description":"Embedded collection of SimpleGear"},"Link":{"type":"object","properties":{"deprecation":{"type":"string","xml":{"name":"deprecation","attribute":true,"wrapped":false}},"href":{"type":"string","xml":{"name":"href","attribute":true,"wrapped":false}},"hreflang":{"type":"string","xml":{"name":"hreflang","attribute":true,"wrapped":false}},"media":{"type":"string","xml":{"name":"media","attribute":true,"wrapped":false}},"rel":{"type":"string","xml":{"name":"rel","attribute":true,"wrapped":false}},"templated":{"type":"boolean"},"title":{"type":"string","xml":{"name":"title","attribute":true,"wrapped":false}},"type":{"type":"string","xml":{"name":"type","attribute":true,"wrapped":false}}},"title":"Link","xml":{"name":"link","namespace":"http://www.w3.org/2005/Atom","attribute":false,"wrapped":false}},"PageMetadata":{"type":"object","properties":{"number":{"type":"integer","format":"int64","xml":{"name":"number","attribute":true,"wrapped":false}},"size":{"type":"integer","format":"int64","xml":{"name":"size","attribute":true,"wrapped":false}},"totalElements":{"type":"integer","format":"int64","xml":{"name":"totalElements","attribute":true,"wrapped":false}},"totalPages":{"type":"integer","format":"int64","xml":{"name":"totalPages","attribute":true,"wrapped":false}}},"title":"PageMetadata"},"PagedResources«Resource«SimpleGear»»":{"type":"object","properties":{"content":{"type":"array","items":{"$ref":"#/definitions/Resource«SimpleGear»"}},"links":{"type":"array","xml":{"name":"link","namespace":"http://www.w3.org/2005/Atom","attribute":false,"wrapped":false},"items":{"$ref":"#/definitions/Link"}},"page":{"$ref":"#/definitions/PageMetadata"}},"title":"PagedResources«Resource«SimpleGear»»","xml":{"name":"pagedEntities","attribute":false,"wrapped":false}},"ResourceSupport":{"type":"object","properties":{"links":{"type":"array","xml":{"name":"link","namespace":"http://www.w3.org/2005/Atom","attribute":false,"wrapped":false},"items":{"$ref":"#/definitions/Link"}}},"title":"ResourceSupport"},"Resources«Category»":{"type":"object","required":["_embedded","_links"],"properties":{"_embedded":{"$ref":"#/definitions/EmbeddedCollection«Category»"},"_links":{"type":"object","description":"Link collection","additionalProperties":{"$ref":"#/definitions/Link"}}},"title":"Resources«Category»","xml":{"name":"entities","attribute":false,"wrapped":false},"description":"Resources of Category"},"Resources«Characteristic»":{"type":"object","required":["_embedded","_links"],"properties":{"_embedded":{"$ref":"#/definitions/EmbeddedCollection«Characteristic»"},"_links":{"type":"object","description":"Link collection","additionalProperties":{"$ref":"#/definitions/Link"}}},"title":"Resources«Characteristic»","xml":{"name":"entities","attribute":false,"wrapped":false},"description":"Resources of Characteristic"},"Resources«SimpleGear»":{"type":"object","required":["_embedded","_links"],"properties":{"_embedded":{"$ref":"#/definitions/EmbeddedCollection«SimpleGear»"},"_links":{"type":"object","description":"Link collection","additionalProperties":{"$ref":"#/definitions/Link"}}},"title":"Resources«SimpleGear»","description":"Resources of SimpleGear"},"Resource«SimpleGear»":{"type":"object","properties":{"applicableCharacteristics":{"type":"array","items":{"$ref":"#/definitions/ApplicableCharacteristicsInfo"}},"categories":{"type":"array","items":{"$ref":"#/definitions/Category"}},"code":{"type":"string"},"id":{"type":"string","format":"uuid"},"links":{"type":"array","xml":{"name":"link","namespace":"http://www.w3.org/2005/Atom","attribute":false,"wrapped":false},"items":{"$ref":"#/definitions/Link"}},"name":{"type":"string"},"versionId":{"type":"integer","format":"int64"}},"title":"Resource«SimpleGear»","xml":{"name":"Resource«SimpleGear»","attribute":false,"wrapped":false}},"SimpleGear":{"type":"object","properties":{"applicableCharacteristics":{"type":"array","items":{"$ref":"#/definitions/ApplicableCharacteristicsInfo"}},"categories":{"type":"array","items":{"$ref":"#/definitions/Category"}},"code":{"type":"string"},"id":{"type":"string","format":"uuid"},"name":{"type":"string"},"versionId":{"type":"integer","format":"int64"}},"title":"SimpleGear"},"View":{"type":"object","properties":{"contentType":{"type":"string"}},"title":"View"}}}
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Gear Service",
+    "version": "1.0.0",
+    "title": "SDS Gear Service",
+    "contact": {},
+    "license": {
+      "url": "http://unlicense.org"
+    }
+  },
+  "host": "sds-gear-service.sds.svc.cluster.local",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "gear-controller",
+      "description": "Gear Controller"
+    },
+    {
+      "name": "hal-browser",
+      "description": "Hal Browser"
+    },
+    {
+      "name": "profile-controller",
+      "description": "Profile Controller"
+    }
+  ],
+  "paths": {
+    "/v1/": {
+      "get": {
+        "tags": [
+          "hal-browser"
+        ],
+        "summary": "index",
+        "operationId": "indexUsingGET",
+        "produces": [
+          "text/html"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/View"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/all": {
+      "get": {
+        "tags": [
+          "gear-controller"
+        ],
+        "summary": "Retrieves all Gear types and information",
+        "operationId": "retrieveAllGearInformationUsingGET",
+        "produces": [
+          "*/*",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "403": {
+            "description": "User not authorised to perform operation",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "404": {
+            "description": "Resource could not be found",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "500": {
+            "description": "Error occurred while performing operation",
+            "schema": {
+              "type": "string"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/browser": {
+      "get": {
+        "tags": [
+          "hal-browser"
+        ],
+        "summary": "browser",
+        "operationId": "browserUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/View"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/categories": {
+      "get": {
+        "tags": [
+          "gear-controller"
+        ],
+        "summary": "Retrieves all Gear Categories",
+        "operationId": "retrieveAllCategoriesUsingGET",
+        "produces": [
+          "*/*",
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "403": {
+            "description": "User not authorised to perform operation",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "404": {
+            "description": "Resource could not be found",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "500": {
+            "description": "Error occurred while performing operation",
+            "schema": {
+              "type": "string"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/characteristics": {
+      "get": {
+        "tags": [
+          "gear-controller"
+        ],
+        "summary": "Retrieves all Gear Characteristics",
+        "operationId": "retrieveAllCharacteristicsUsingGET",
+        "produces": [
+          "*/*",
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "403": {
+            "description": "User not authorised to perform operation",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "404": {
+            "description": "Resource could not be found",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "500": {
+            "description": "Error occurred while performing operation",
+            "schema": {
+              "type": "string"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/gears": {
+      "get": {
+        "tags": [
+          "gear-controller"
+        ],
+        "summary": "Unified Search to Retrieve gears by name, category",
+        "operationId": "searchUsingGET",
+        "produces": [
+          "*/*",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "category",
+            "in": "query",
+            "description": "(Optional) - The category name",
+            "required": false,
+            "type": "string",
+            "allowEmptyValue": false
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "description": "(Optional) - The search term",
+            "required": false,
+            "type": "string",
+            "allowEmptyValue": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "403": {
+            "description": "User not authorised to perform operation",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "404": {
+            "description": "Resource could not be found",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "500": {
+            "description": "Error occurred while performing operation",
+            "schema": {
+              "type": "string"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/gears/search": {
+      "post": {
+        "tags": [
+          "gear-controller"
+        ],
+        "summary": "Bulk Retrieve Gear Information by id",
+        "operationId": "bulkRetrieveGearsUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "ids",
+            "description": "ids",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uuid"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "403": {
+            "description": "User not authorised to perform operation",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "404": {
+            "description": "Resource could not be found",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "500": {
+            "description": "Error occurred while performing operation",
+            "schema": {
+              "type": "string"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/gears/{id}": {
+      "get": {
+        "tags": [
+          "gear-controller"
+        ],
+        "summary": "Retrieves a Gear by Id",
+        "operationId": "searchByIdUsingGET",
+        "produces": [
+          "*/*",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "403": {
+            "description": "User not authorised to perform operation",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "404": {
+            "description": "Resource could not be found",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "500": {
+            "description": "Error occurred while performing operation",
+            "schema": {
+              "type": "string"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/profile": {
+      "get": {
+        "tags": [
+          "profile-controller"
+        ],
+        "summary": "listAllFormsOfMetadata",
+        "operationId": "listAllFormsOfMetadataUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResourceSupport"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "options": {
+        "tags": [
+          "profile-controller"
+        ],
+        "summary": "profileOptions",
+        "operationId": "profileOptionsUsingOPTIONS",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    }
+  },
+  "definitions": {
+    "ApplicableCharacteristicsInfo": {
+      "type": "object",
+      "properties": {
+        "characteristicId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "code": {
+          "type": "string"
+        },
+        "fixed": {
+          "type": "boolean"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "title": "ApplicableCharacteristicsInfo"
+    },
+    "Category": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "title": "Category"
+    },
+    "Characteristic": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "title": "Characteristic"
+    },
+    "EmbeddedCollection«Category»": {
+      "type": "object",
+      "required": [
+        "categories"
+      ],
+      "properties": {
+        "categories": {
+          "type": "array",
+          "description": "Resource collection",
+          "items": {
+            "$ref": "#/definitions/Category"
+          }
+        }
+      },
+      "title": "EmbeddedCollection«Category»",
+      "xml": {
+        "name": "content",
+        "wrapped": true
+      },
+      "description": "Embedded collection of Category"
+    },
+    "EmbeddedCollection«Characteristic»": {
+      "type": "object",
+      "required": [
+        "characteristics"
+      ],
+      "properties": {
+        "characteristics": {
+          "type": "array",
+          "description": "Resource collection",
+          "items": {
+            "$ref": "#/definitions/Characteristic"
+          }
+        }
+      },
+      "title": "EmbeddedCollection«Characteristic»",
+      "xml": {
+        "name": "content",
+        "wrapped": true
+      },
+      "description": "Embedded collection of Characteristic"
+    },
+    "EmbeddedCollection«SimpleGear»": {
+      "type": "object",
+      "required": [
+        "simpleGears"
+      ],
+      "properties": {
+        "simpleGears": {
+          "type": "array",
+          "description": "Resource collection",
+          "items": {
+            "$ref": "#/definitions/SimpleGear"
+          }
+        }
+      },
+      "title": "EmbeddedCollection«SimpleGear»",
+      "description": "Embedded collection of SimpleGear"
+    },
+    "Link": {
+      "type": "object",
+      "properties": {
+        "deprecation": {
+          "type": "string",
+          "xml": {
+            "name": "deprecation",
+            "attribute": true,
+            "wrapped": false
+          }
+        },
+        "href": {
+          "type": "string",
+          "xml": {
+            "name": "href",
+            "attribute": true,
+            "wrapped": false
+          }
+        },
+        "hreflang": {
+          "type": "string",
+          "xml": {
+            "name": "hreflang",
+            "attribute": true,
+            "wrapped": false
+          }
+        },
+        "media": {
+          "type": "string",
+          "xml": {
+            "name": "media",
+            "attribute": true,
+            "wrapped": false
+          }
+        },
+        "rel": {
+          "type": "string",
+          "xml": {
+            "name": "rel",
+            "attribute": true,
+            "wrapped": false
+          }
+        },
+        "templated": {
+          "type": "boolean"
+        },
+        "title": {
+          "type": "string",
+          "xml": {
+            "name": "title",
+            "attribute": true,
+            "wrapped": false
+          }
+        },
+        "type": {
+          "type": "string",
+          "xml": {
+            "name": "type",
+            "attribute": true,
+            "wrapped": false
+          }
+        }
+      },
+      "title": "Link",
+      "xml": {
+        "name": "link",
+        "namespace": "http://www.w3.org/2005/Atom",
+        "attribute": false,
+        "wrapped": false
+      }
+    },
+    "PageMetadata": {
+      "type": "object",
+      "properties": {
+        "number": {
+          "type": "integer",
+          "format": "int64",
+          "xml": {
+            "name": "number",
+            "attribute": true,
+            "wrapped": false
+          }
+        },
+        "size": {
+          "type": "integer",
+          "format": "int64",
+          "xml": {
+            "name": "size",
+            "attribute": true,
+            "wrapped": false
+          }
+        },
+        "totalElements": {
+          "type": "integer",
+          "format": "int64",
+          "xml": {
+            "name": "totalElements",
+            "attribute": true,
+            "wrapped": false
+          }
+        },
+        "totalPages": {
+          "type": "integer",
+          "format": "int64",
+          "xml": {
+            "name": "totalPages",
+            "attribute": true,
+            "wrapped": false
+          }
+        }
+      },
+      "title": "PageMetadata"
+    },
+    "PagedResources«Resource«SimpleGear»»": {
+      "type": "object",
+      "properties": {
+        "content": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Resource«SimpleGear»"
+          }
+        },
+        "links": {
+          "type": "array",
+          "xml": {
+            "name": "link",
+            "namespace": "http://www.w3.org/2005/Atom",
+            "attribute": false,
+            "wrapped": false
+          },
+          "items": {
+            "$ref": "#/definitions/Link"
+          }
+        },
+        "page": {
+          "$ref": "#/definitions/PageMetadata"
+        }
+      },
+      "title": "PagedResources«Resource«SimpleGear»»",
+      "xml": {
+        "name": "pagedEntities",
+        "attribute": false,
+        "wrapped": false
+      }
+    },
+    "ResourceSupport": {
+      "type": "object",
+      "properties": {
+        "links": {
+          "type": "array",
+          "xml": {
+            "name": "link",
+            "namespace": "http://www.w3.org/2005/Atom",
+            "attribute": false,
+            "wrapped": false
+          },
+          "items": {
+            "$ref": "#/definitions/Link"
+          }
+        }
+      },
+      "title": "ResourceSupport"
+    },
+    "Resources«Category»": {
+      "type": "object",
+      "required": [
+        "_embedded",
+        "_links"
+      ],
+      "properties": {
+        "_embedded": {
+          "$ref": "#/definitions/EmbeddedCollection«Category»"
+        },
+        "_links": {
+          "type": "object",
+          "description": "Link collection",
+          "additionalProperties": {
+            "$ref": "#/definitions/Link"
+          }
+        }
+      },
+      "title": "Resources«Category»",
+      "xml": {
+        "name": "entities",
+        "attribute": false,
+        "wrapped": false
+      },
+      "description": "Resources of Category"
+    },
+    "Resources«Characteristic»": {
+      "type": "object",
+      "required": [
+        "_embedded",
+        "_links"
+      ],
+      "properties": {
+        "_embedded": {
+          "$ref": "#/definitions/EmbeddedCollection«Characteristic»"
+        },
+        "_links": {
+          "type": "object",
+          "description": "Link collection",
+          "additionalProperties": {
+            "$ref": "#/definitions/Link"
+          }
+        }
+      },
+      "title": "Resources«Characteristic»",
+      "xml": {
+        "name": "entities",
+        "attribute": false,
+        "wrapped": false
+      },
+      "description": "Resources of Characteristic"
+    },
+    "Resources«SimpleGear»": {
+      "type": "object",
+      "required": [
+        "_embedded",
+        "_links"
+      ],
+      "properties": {
+        "_embedded": {
+          "$ref": "#/definitions/EmbeddedCollection«SimpleGear»"
+        },
+        "_links": {
+          "type": "object",
+          "description": "Link collection",
+          "additionalProperties": {
+            "$ref": "#/definitions/Link"
+          }
+        }
+      },
+      "title": "Resources«SimpleGear»",
+      "description": "Resources of SimpleGear"
+    },
+    "Resource«SimpleGear»": {
+      "type": "object",
+      "properties": {
+        "applicableCharacteristics": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ApplicableCharacteristicsInfo"
+          }
+        },
+        "categories": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Category"
+          }
+        },
+        "code": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "links": {
+          "type": "array",
+          "xml": {
+            "name": "link",
+            "namespace": "http://www.w3.org/2005/Atom",
+            "attribute": false,
+            "wrapped": false
+          },
+          "items": {
+            "$ref": "#/definitions/Link"
+          }
+        },
+        "name": {
+          "type": "string"
+        },
+        "versionId": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "Resource«SimpleGear»",
+      "xml": {
+        "name": "Resource«SimpleGear»",
+        "attribute": false,
+        "wrapped": false
+      }
+    },
+    "SimpleGear": {
+      "type": "object",
+      "properties": {
+        "applicableCharacteristics": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ApplicableCharacteristicsInfo"
+          }
+        },
+        "categories": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Category"
+          }
+        },
+        "code": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "name": {
+          "type": "string"
+        },
+        "versionId": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "SimpleGear"
+    },
+    "View": {
+      "type": "object",
+      "properties": {
+        "contentType": {
+          "type": "string"
+        }
+      },
+      "title": "View"
+    }
+  }
+}

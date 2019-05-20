@@ -1,1 +1,476 @@
-{"swagger":"2.0","info":{"description":"PortService","version":"1.0.0","title":"SDS Port Service","contact":{},"license":{"url":"http://unlicense.org"}},"host":"sds-port-service.sds.svc.cluster.local","basePath":"/","tags":[{"name":"hal-browser","description":"Hal Browser"},{"name":"port-controller","description":"Port Controller"},{"name":"profile-controller","description":"Profile Controller"}],"paths":{"/v1/":{"get":{"tags":["hal-browser"],"summary":"index","operationId":"indexUsingGET","produces":["text/html"],"responses":{"200":{"description":"OK","schema":{"$ref":"#/definitions/View"}}},"deprecated":false}},"/v1/browser":{"get":{"tags":["hal-browser"],"summary":"browser","operationId":"browserUsingGET","produces":["*/*"],"responses":{"200":{"description":"OK","schema":{"$ref":"#/definitions/View"}}},"deprecated":false}},"/v1/ports":{"get":{"tags":["port-controller"],"summary":"Unified Search to Retrieve Ports by code, name or country code","operationId":"searchUsingGET","produces":["*/*","application/json"],"parameters":[{"name":"code","in":"query","description":"The Port Code","required":false,"type":"string","allowEmptyValue":false},{"name":"country","in":"query","description":"scope: e.g 'GBR', 'ESP' ...","required":false,"type":"string","allowEmptyValue":false},{"name":"query","in":"query","description":"The search term","required":false,"type":"string","allowEmptyValue":false}],"responses":{"200":{"description":"Successful","schema":{"type":"string"}},"400":{"description":"Invalid parameters","schema":{"type":"string"}},"403":{"description":"User not authorised to perform operation","schema":{"type":"string"}},"404":{"description":"Resource could not be found","schema":{"type":"string"}},"500":{"description":"Error occurred while performing operation","schema":{"type":"string"}}},"deprecated":false}},"/v1/ports/search":{"post":{"tags":["port-controller"],"summary":"Bulk Retrieve Port Information by id","operationId":"bulkRetrievePortsUsingPOST","consumes":["application/json"],"produces":["*/*","application/json"],"parameters":[{"in":"body","name":"ids","description":"ids","required":true,"schema":{"type":"array","items":{"type":"string","format":"uuid"}}}],"responses":{"200":{"description":"Successful","schema":{"type":"string"}},"400":{"description":"Invalid parameters","schema":{"type":"string"}},"403":{"description":"User not authorised to perform operation","schema":{"type":"string"}},"404":{"description":"Resource could not be found","schema":{"type":"string"}},"500":{"description":"Error occurred while performing operation","schema":{"type":"string"}}},"deprecated":false}},"/v1/ports/{id}":{"get":{"tags":["port-controller"],"summary":"Retrieves a Port by Id","operationId":"searchByIdUsingGET","produces":["*/*","application/json"],"parameters":[{"name":"id","in":"path","description":"id","required":true,"type":"string","format":"uuid"}],"responses":{"200":{"description":"Successful","schema":{"type":"string"}},"400":{"description":"Invalid parameters","schema":{"type":"string"}},"403":{"description":"User not authorised to perform operation","schema":{"type":"string"}},"404":{"description":"Resource could not be found","schema":{"type":"string"}},"500":{"description":"Error occurred while performing operation","schema":{"type":"string"}}},"deprecated":false}},"/v1/profile":{"get":{"tags":["profile-controller"],"summary":"listAllFormsOfMetadata","operationId":"listAllFormsOfMetadataUsingGET","produces":["*/*"],"responses":{"200":{"description":"OK","schema":{"$ref":"#/definitions/ResourceSupport"}}},"deprecated":false},"options":{"tags":["profile-controller"],"summary":"profileOptions","operationId":"profileOptionsUsingOPTIONS","consumes":["application/json"],"produces":["*/*"],"responses":{"200":{"description":"OK","schema":{"type":"object"}}},"deprecated":false}}},"definitions":{"EmbeddedCollection«Port»":{"type":"object","required":["port"],"properties":{"port":{"type":"array","description":"Resource collection","items":{"$ref":"#/definitions/Port"}}},"title":"EmbeddedCollection«Port»","description":"Embedded collection of Port"},"Link":{"type":"object","properties":{"deprecation":{"type":"string","xml":{"name":"deprecation","attribute":true,"wrapped":false}},"href":{"type":"string","xml":{"name":"href","attribute":true,"wrapped":false}},"hreflang":{"type":"string","xml":{"name":"hreflang","attribute":true,"wrapped":false}},"media":{"type":"string","xml":{"name":"media","attribute":true,"wrapped":false}},"rel":{"type":"string","xml":{"name":"rel","attribute":true,"wrapped":false}},"templated":{"type":"boolean"},"title":{"type":"string","xml":{"name":"title","attribute":true,"wrapped":false}},"type":{"type":"string","xml":{"name":"type","attribute":true,"wrapped":false}}},"title":"Link","xml":{"name":"link","namespace":"http://www.w3.org/2005/Atom","attribute":false,"wrapped":false}},"Port":{"type":"object","properties":{"countryCode":{"type":"string"},"id":{"type":"string","format":"uuid"},"latitude":{"type":"number","format":"float"},"longitude":{"type":"number","format":"float"},"portCode":{"type":"string"},"portName":{"type":"string"},"versionId":{"type":"integer","format":"int64"}},"title":"Port"},"ResourceSupport":{"type":"object","properties":{"links":{"type":"array","xml":{"name":"link","namespace":"http://www.w3.org/2005/Atom","attribute":false,"wrapped":false},"items":{"$ref":"#/definitions/Link"}}},"title":"ResourceSupport"},"Resources«Port»":{"type":"object","required":["_embedded","_links"],"properties":{"_embedded":{"$ref":"#/definitions/EmbeddedCollection«Port»"},"_links":{"type":"object","description":"Link collection","additionalProperties":{"$ref":"#/definitions/Link"}}},"title":"Resources«Port»","description":"Resources of Port"},"View":{"type":"object","properties":{"contentType":{"type":"string"}},"title":"View"}}}
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "PortService",
+    "version": "1.0.0",
+    "title": "SDS Port Service",
+    "contact": {},
+    "license": {
+      "url": "http://unlicense.org"
+    }
+  },
+  "host": "sds-port-service.sds.svc.cluster.local",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "hal-browser",
+      "description": "Hal Browser"
+    },
+    {
+      "name": "port-controller",
+      "description": "Port Controller"
+    },
+    {
+      "name": "profile-controller",
+      "description": "Profile Controller"
+    }
+  ],
+  "paths": {
+    "/v1/": {
+      "get": {
+        "tags": [
+          "hal-browser"
+        ],
+        "summary": "index",
+        "operationId": "indexUsingGET",
+        "produces": [
+          "text/html"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/View"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/browser": {
+      "get": {
+        "tags": [
+          "hal-browser"
+        ],
+        "summary": "browser",
+        "operationId": "browserUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/View"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/ports": {
+      "get": {
+        "tags": [
+          "port-controller"
+        ],
+        "summary": "Unified Search to Retrieve Ports by code, name or country code",
+        "operationId": "searchUsingGET",
+        "produces": [
+          "*/*",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "description": "The Port Code",
+            "required": false,
+            "type": "string",
+            "allowEmptyValue": false
+          },
+          {
+            "name": "country",
+            "in": "query",
+            "description": "scope: e.g 'GBR', 'ESP' ...",
+            "required": false,
+            "type": "string",
+            "allowEmptyValue": false
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "description": "The search term",
+            "required": false,
+            "type": "string",
+            "allowEmptyValue": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "schema": {
+              "$ref": "#/definitions/Resources«Port»"
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "403": {
+            "description": "User not authorised to perform operation",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "404": {
+            "description": "Resource could not be found",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "500": {
+            "description": "Error occurred while performing operation",
+            "schema": {
+              "type": "string"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/ports/search": {
+      "post": {
+        "tags": [
+          "port-controller"
+        ],
+        "summary": "Bulk Retrieve Port Information by id",
+        "operationId": "bulkRetrievePortsUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "ids",
+            "description": "ids",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uuid"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "schema": {
+              "$ref": "#/definitions/Resources«Port»"
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "403": {
+            "description": "User not authorised to perform operation",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "404": {
+            "description": "Resource could not be found",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "500": {
+            "description": "Error occurred while performing operation",
+            "schema": {
+              "type": "string"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/ports/{id}": {
+      "get": {
+        "tags": [
+          "port-controller"
+        ],
+        "summary": "Retrieves a Port by Id",
+        "operationId": "searchByIdUsingGET",
+        "produces": [
+          "*/*",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "schema": {
+              "$ref": "#/definitions/Port"
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "403": {
+            "description": "User not authorised to perform operation",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "404": {
+            "description": "Resource could not be found",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "500": {
+            "description": "Error occurred while performing operation",
+            "schema": {
+              "type": "string"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/profile": {
+      "get": {
+        "tags": [
+          "profile-controller"
+        ],
+        "summary": "listAllFormsOfMetadata",
+        "operationId": "listAllFormsOfMetadataUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResourceSupport"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "options": {
+        "tags": [
+          "profile-controller"
+        ],
+        "summary": "profileOptions",
+        "operationId": "profileOptionsUsingOPTIONS",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    }
+  },
+  "definitions": {
+    "EmbeddedCollection«Port»": {
+      "type": "object",
+      "required": [
+        "port"
+      ],
+      "properties": {
+        "port": {
+          "type": "array",
+          "description": "Resource collection",
+          "items": {
+            "$ref": "#/definitions/Port"
+          }
+        }
+      },
+      "title": "EmbeddedCollection«Port»",
+      "description": "Embedded collection of Port"
+    },
+    "Link": {
+      "type": "object",
+      "properties": {
+        "deprecation": {
+          "type": "string",
+          "xml": {
+            "name": "deprecation",
+            "attribute": true,
+            "wrapped": false
+          }
+        },
+        "href": {
+          "type": "string",
+          "xml": {
+            "name": "href",
+            "attribute": true,
+            "wrapped": false
+          }
+        },
+        "hreflang": {
+          "type": "string",
+          "xml": {
+            "name": "hreflang",
+            "attribute": true,
+            "wrapped": false
+          }
+        },
+        "media": {
+          "type": "string",
+          "xml": {
+            "name": "media",
+            "attribute": true,
+            "wrapped": false
+          }
+        },
+        "rel": {
+          "type": "string",
+          "xml": {
+            "name": "rel",
+            "attribute": true,
+            "wrapped": false
+          }
+        },
+        "templated": {
+          "type": "boolean"
+        },
+        "title": {
+          "type": "string",
+          "xml": {
+            "name": "title",
+            "attribute": true,
+            "wrapped": false
+          }
+        },
+        "type": {
+          "type": "string",
+          "xml": {
+            "name": "type",
+            "attribute": true,
+            "wrapped": false
+          }
+        }
+      },
+      "title": "Link",
+      "xml": {
+        "name": "link",
+        "namespace": "http://www.w3.org/2005/Atom",
+        "attribute": false,
+        "wrapped": false
+      }
+    },
+    "Port": {
+      "type": "object",
+      "properties": {
+        "countryCode": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "latitude": {
+          "type": "number",
+          "format": "float"
+        },
+        "longitude": {
+          "type": "number",
+          "format": "float"
+        },
+        "portCode": {
+          "type": "string"
+        },
+        "portName": {
+          "type": "string"
+        },
+        "versionId": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "Port"
+    },
+    "ResourceSupport": {
+      "type": "object",
+      "properties": {
+        "links": {
+          "type": "array",
+          "xml": {
+            "name": "link",
+            "namespace": "http://www.w3.org/2005/Atom",
+            "attribute": false,
+            "wrapped": false
+          },
+          "items": {
+            "$ref": "#/definitions/Link"
+          }
+        }
+      },
+      "title": "ResourceSupport"
+    },
+    "Resources«Port»": {
+      "type": "object",
+      "required": [
+        "_embedded",
+        "_links"
+      ],
+      "properties": {
+        "_embedded": {
+          "$ref": "#/definitions/EmbeddedCollection«Port»"
+        },
+        "_links": {
+          "type": "object",
+          "description": "Link collection",
+          "additionalProperties": {
+            "$ref": "#/definitions/Link"
+          }
+        }
+      },
+      "title": "Resources«Port»",
+      "description": "Resources of Port"
+    },
+    "View": {
+      "type": "object",
+      "properties": {
+        "contentType": {
+          "type": "string"
+        }
+      },
+      "title": "View"
+    }
+  }
+}
