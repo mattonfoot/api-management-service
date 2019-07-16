@@ -1,0 +1,281 @@
+openapi: 3.0.0
+info:
+  description: The offical Marine Management Organisation Developer APIs
+  version: 1.0.0
+  title: MMO Developer APIs
+  contact:
+    name: MMO Developer Support
+    url: 'https://developers.marinemanagement.org.uk/support'
+    email: developers@marinemanagement.org.uk
+  license:
+    name: OGL v3.0
+    url: 'http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/'
+components:
+  schemas:
+    listOfPort:
+      type: object
+      required:
+        - ports
+      discriminator:
+        propertyName: Embedded collection of Port
+      properties:
+        ports:
+          type: array
+          description: Resource collection
+          items:
+            $ref: '#/components/schemas/port'
+      title: EmbeddedCollectionPort
+      xml:
+        name: content
+        wrapped: true
+      description: Embedded collection of Port
+    Link:
+      type: object
+      properties:
+        deprecation:
+          type: string
+          xml:
+            name: deprecation
+            attribute: true
+            wrapped: false
+        href:
+          type: string
+          xml:
+            name: href
+            attribute: true
+            wrapped: false
+        hreflang:
+          type: string
+          xml:
+            name: hreflang
+            attribute: true
+            wrapped: false
+        media:
+          type: string
+          xml:
+            name: media
+            attribute: true
+            wrapped: false
+        rel:
+          type: string
+          xml:
+            name: rel
+            attribute: true
+            wrapped: false
+        templated:
+          type: boolean
+        title:
+          type: string
+          xml:
+            name: title
+            attribute: true
+            wrapped: false
+        type:
+          type: string
+          xml:
+            name: type
+            attribute: true
+            wrapped: false
+      title: Link
+      xml:
+        name: link
+        namespace: 'http://www.w3.org/2005/Atom'
+        attribute: false
+        wrapped: false
+    port:
+      type: object
+      properties:
+        countryCode:
+          type: string
+        id:
+          type: string
+        latitude:
+          type: number
+          format: float
+        longitude:
+          type: number
+          format: float
+        portCode:
+          type: string
+        portName:
+          type: string
+      title: Port
+    portList:
+      type: object
+      required:
+        - _embedded
+        - _links
+      discriminator:
+        propertyName: Resources of Port
+      properties:
+        _embedded:
+          $ref: '#/components/schemas/listOfPort'
+        _links:
+          type: object
+          description: Link collection
+          additionalProperties:
+            $ref: '#/components/schemas/Link'
+      title: ResourcesPort
+      xml:
+        name: entities
+        attribute: false
+        wrapped: false
+      description: Resources of Port
+    Error:
+      title: Error
+      type: object
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+        stack:
+          type: string
+      required:
+        - code
+        - message
+  responses:
+    BadRequest:
+      description: Invalid parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Access token is missing or invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Access token not authorised to perform operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    ServerError:
+      description: An error occurred while performing the operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+paths:
+  /v1/ports:
+    get:
+      tags:
+        - Port
+      summary: 'Unified Search to Retrieve Ports by code, name or country code'
+      operationId: retrievePorts
+      parameters:
+        - name: code
+          in: query
+          description: The Port Code
+          required: false
+          schema:
+            type: string
+        - name: country
+          in: query
+          description: 'scope: e.g ''GBR'', ''ESP'' ...'
+          required: false
+          schema:
+            type: string
+        - name: query
+          in: query
+          description: The search term
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                type: string
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+      deprecated: false
+  /v1/ports/search:
+    post:
+      tags:
+        - Port
+      summary: Bulk Retrieve Port Information by id
+      operationId: searchPorts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+        description: ids
+        required: true
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                type: string
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+      deprecated: false
+  '/v1/ports/{id}':
+    get:
+      tags:
+        - Port
+      summary: Retrieves a Port by Id
+      operationId: retrievePortsById
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                type: string
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+      deprecated: false
+servers:
+  - url: 'https://dev-api.marinemanagement.org.uk/'
+    description: MMO Development API Service
+tags:
+  - name: Port
+    description: Port Controller
