@@ -43,7 +43,7 @@
     "x-frame-options": "^1.0.0"
   },
   "devDependencies": {
-    "snyk": "^1.161.1"
+    "snyk": "^1.996.0"
   },
   "snyk": true
 }
